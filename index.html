@@ -104,6 +104,13 @@ a{color:var(--uw-purple)}
 .research-notes p{font-size:.88rem;line-height:1.6;margin-bottom:0}
 .explanation-review{font-size:.84rem;margin:9px 0 0;white-space:pre-wrap;line-height:1.5}
 .save-notice{margin:18px 0;background:var(--purple-light);border-left:3px solid var(--uw-purple);padding:15px;border-radius:6px;font-size:.88rem;line-height:1.6}
+.studio-entry{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:25px;padding:19px 22px;background:var(--white);border:1px solid var(--line);border-radius:10px}
+.studio-entry strong{display:block;font-size:.95rem;color:var(--ink)}
+.studio-entry p{margin:5px 0 0;color:var(--muted);font-size:.85rem}
+.studio-entry .btn{display:inline-block;text-decoration:none;white-space:nowrap;font-size:.84rem}
+.studio-entry .btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+.studio-entry .minor{margin-top:8px;text-align:right;font-size:.75rem}
+@media(max-width:650px){.studio-entry{flex-direction:column;align-items:stretch}.studio-entry .minor{text-align:left}}
 </style>
 </head>
 <body>
@@ -176,7 +183,10 @@ function theory() {
     '<div class="feature"><strong>Contextual distance</strong><div class="pair">Near <span class="between">vs.</span> Far</div></div></div>'+
     '<h2>The 2 × 2 × 2 design</h2><div class="table-wrap"><table><thead><tr>'+
     '<th>Value</th><th>Deep · Near</th><th>Deep · Far</th><th>Shallow · Near</th><th>Shallow · Far</th></tr></thead><tbody>'+rows+
-    '</tbody></table></div><p class="matrix-note">Eight distinct combinations. Next: a fixed target and a concrete case for each cell.</p>';
+    '</tbody></table></div><p class="matrix-note">Eight distinct combinations. Next: a fixed target and a concrete case for each cell.</p>'+ 
+    '<div class="studio-entry"><div><strong>Case Studio</strong><p>Open the drag-and-drop dilemma organizer to explore candidate cases.</p></div>'+
+    '<div><a class="btn secondary" id="studio-link" href="./moral_case_studio.html" aria-disabled="true" tabindex="-1">Open Case Studio ↗</a>'+
+    '<div class="minor" id="studio-status" aria-live="polite">Checking whether the original HTML is published…</div></div></div>';
 }
 function targetPage() {
   return '<div class="eyebrow">02 / The target</div><h1>One target, held constant</h1>'+
@@ -202,7 +212,7 @@ function casePage(c,i){
     '<div class="rating-question" id="rating-question">How relevant is this case for reasoning about the target?</div>'+
     '<div class="ratings" role="group" aria-labelledby="rating-question">'+labels+'</div>'+
     '<div class="anchors"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div>'+
-    '<div class="saved" id="saved">'+(selected?"Rating: "+selected+"/7":"Select a rating to continue")+'</div>'+
+    '<div class="saved" id="saved">'+(selected?"Rating: "+selected+"/7":"Rating optional · You can still continue")+'</div>'+
     '<div class="explanation-area"><label class="explanation-label" for="explanation">Why did you give this rating? <span class="muted-label">(optional)</span></label>'+
     '<textarea id="explanation" maxlength="2000" rows="4" placeholder="Briefly explain what makes the prior case relevant or different from the target.">'+escapeHtml(explanations[c.id]||"")+'</textarea></div>'+
     '<details class="research-notes"><summary>Researcher notes: proposed condition and rationale</summary>'+
@@ -302,13 +312,12 @@ function render(){
   back.textContent=step===10?"← Previous case":"← Back";
   const next=document.getElementById("next");
   const caseIndex=step-2;
-  next.disabled=step>=2&&step<=9&&!ratings[CASES[caseIndex].id];
+  next.disabled=false; // Collaborator walkthrough: allow viewing each case without a rating.
   next.textContent=step===0?"See the target →":step===1?"Start reviewing cases →":step<9?"Next case →":step===9?"Review ratings →":"Start again";
   document.querySelectorAll('input[name="relevance"]').forEach(input=>input.addEventListener("change",function(){
     const c=CASES[step-2];ratings[c.id]=Number(this.value);
     document.getElementById("rated-count").textContent=Object.keys(ratings).length+" of 8 rated";
     document.getElementById("saved").textContent="Rating: "+ratings[c.id]+"/7";
-    next.disabled=false;
     lastSubmittedJSON=null;
     persist();
   }));
@@ -319,6 +328,19 @@ function render(){
     lastSubmittedJSON=null;
     persist();
   });
+  if(step===0){
+    const studio=document.getElementById("studio-link");
+    const studioStatus=document.getElementById("studio-status");
+    fetch("./moral_case_studio.html",{method:"HEAD",cache:"no-store"}).then(r=>{
+      if(!studio.isConnected)return;
+      if(r.ok){
+        studio.removeAttribute("aria-disabled");studio.removeAttribute("tabindex");
+        studioStatus.textContent="Case Studio is available.";
+      }else{
+        studioStatus.textContent="Original studio HTML not published yet.";
+      }
+    }).catch(()=>{if(studio.isConnected)studioStatus.textContent="Studio availability could not be checked.";});
+  }
   if(step===10){
     document.getElementById("export").addEventListener("click",exportCSV);
     document.getElementById("copy").addEventListener("click",copyReview);
