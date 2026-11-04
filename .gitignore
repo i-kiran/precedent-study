@@ -1,0 +1,4 @@
+# Publish only the study page; keep data, notebooks and scripts local.
+*
+!.gitignore
+!index.html

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Precedent Study</title>
+  <script src="https://unpkg.com/jspsych@7.3.4"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.2.0"></script>
+  <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #6366f1; --accent-dark: #4f46e5; --accent-soft: #eef2ff;
+      --ink: #1e1b4b; --muted: #6b7280; --card: #ffffff;
+    }
+    html, body { min-height: 100%; }
+    body {
+      color: var(--ink);
+      background: linear-gradient(135deg, #eef2ff 0%, #fdf2f8 50%, #fff7ed 100%);
+      background-attachment: fixed;
+    }
+    .jspsych-display-element, .jspsych-display-element button {
+      font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
+    }
+    .jspsych-display-element { font-size: 17px; }
+    .jspsych-content {
+      width: 100%; max-width: 820px; box-sizing: border-box;
+      padding-block: 24px;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    .jspsych-display-element *, .jspsych-display-element *::before, .jspsych-display-element *::after { box-sizing: border-box; }
+    .jspsych-display-element { overflow-x: hidden; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+    /* Cards */
+    .text {
+      max-width: 760px; margin: 0 auto 18px; text-align: left; line-height: 1.6;
+      background: var(--card); border-radius: 18px; padding: clamp(18px, 4vw, 28px) clamp(18px, 5vw, 34px);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.12);
+      animation: fadeUp 0.45s ease-out;
+    }
+    .text h2 { margin-top: 4px; font-weight: 800; }
+    .icon { font-size: 44px; text-align: center; margin-bottom: 4px; animation: pop 0.5s ease-out; }
+    .label {
+      display: inline-block; font-size: 13px; font-weight: 800; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 10px;
+    }
+    .question { font-weight: 800; font-size: 19px; color: var(--accent-dark); }
+    .target { font-size: 19px; font-weight: 600; }
+    .hint { color: var(--muted); font-size: 15px; margin-bottom: 0; }
+
+    /* Regular buttons */
+    .jspsych-btn {
+      font-family: inherit; font-size: 16px; font-weight: 600; color: #fff;
+      background: var(--accent); border: none; border-radius: 999px;
+      padding: 12px 30px; margin: 6px; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+      transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+    .jspsych-btn:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4); }
+
+    /* Case cards are the buttons on the selection screen; all share one style so none stands out */
+    .case-choices .jspsych-html-button-response-button { display: block !important; max-width: 760px; margin: 12px auto !important; }
+    .case-btn {
+      display: block; width: 100%; text-align: left; cursor: pointer;
+      font-size: 17px; line-height: 1.55; color: var(--ink);
+      background: #fff; border: 2px solid #e0e7ff; border-left: 6px solid #a5b4fc;
+      border-radius: 14px; padding: 16px 20px;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.08);
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      animation: fadeUp 0.45s ease-out both;
+    }
+    .case-btn:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 8px 22px rgba(99, 102, 241, 0.22); }
+    .case-btn .label { margin-bottom: 6px; }
+    .case-choices .jspsych-html-button-response-button:nth-child(2) .case-btn { animation-delay: 0.08s; }
+    .case-choices .jspsych-html-button-response-button:nth-child(3) .case-btn { animation-delay: 0.16s; }
+    .case-choices .jspsych-html-button-response-button:nth-child(4) .case-btn { animation-delay: 0.24s; }
+
+    /* Progress bar */
+    #jspsych-progressbar-container { background: transparent; border-bottom: none; padding-top: 10px; font-family: "Nunito", Arial, sans-serif; color: var(--muted); }
+    #jspsych-progressbar-outer { width: min(60%, 520px); background: #e0e7ff; border: none; border-radius: 999px; height: 10px; overflow: hidden; }
+    #jspsych-progressbar-inner { background: linear-gradient(90deg, #818cf8, #ec4899, #f97316); border-radius: 999px; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body></body>
+<script>
+  // ---------- Materials ----------
+  // Target and precedents each have a grant and a refuse version, counterbalanced across participants.
+  const TARGET = {
+    grant: "A professor lets a student skip the scheduled final exam to attend her sister's funeral and take a makeup exam later.",
+    refuse: "A professor refuses to let a student reschedule her final exam so she can attend her sister's funeral."
+  };
+
+  const PRECEDENTS = [
+    {
+      condition: "near_surface", distance: "near", depth: "surface",
+      grant: "A librarian extends a student's laptop loan by two days so she can attend her brother's graduation, even though she knew the deadline in advance.",
+      refuse: "A librarian refuses to extend a student's laptop loan by two days so she can attend her brother's graduation, even though no one else has reserved it."
+    },
+    {
+      condition: "far_surface", distance: "far", depth: "surface",
+      grant: "A museum curator displays a woman's photo from her sister's funeral, even though the grieving relatives in it never consented.",
+      refuse: "A museum curator refuses to display a woman's photo from her sister's funeral because the grieving relatives in it never consented."
+    },
+    {
+      condition: "near_deep", distance: "near", depth: "deep",
+      grant: "A scholarship committee lets a student reschedule her interview because her father was unexpectedly hospitalized.",
+      refuse: "A scholarship committee refuses to let a student reschedule her interview after her father is unexpectedly hospitalized."
+    },
+    {
+      condition: "far_deep", distance: "far", depth: "deep",
+      grant: "A housing cooperative lets a resident reschedule her maintenance shift because her mother was unexpectedly hospitalized.",
+      refuse: "A housing cooperative refuses to let a resident reschedule her maintenance shift after her mother is unexpectedly hospitalized."
+    }
+  ];
+
+  // ---------- Setup ----------
+  const jsPsych = initJsPsych({
+    show_progress_bar: true,
+    message_progress_bar: "Progress",
+    on_finish: () => {
+      jsPsych.data.get().localSave("csv", `precedent_${participantId}.csv`);
+      jsPsych.data.displayData();
+    }
+  });
+
+  const participantId = jsPsych.data.getURLVariable("PROLIFIC_PID") || jsPsych.randomization.randomID(8);
+
+  // Counterbalancing: target version random; precedents in random order with 2 grant + 2 refuse.
+  const targetOutcome = jsPsych.randomization.sampleWithoutReplacement(["grant", "refuse"], 1)[0];
+  const targetText = TARGET[targetOutcome];
+  const outcomes = jsPsych.randomization.shuffle(["grant", "grant", "refuse", "refuse"]);
+  const cases = jsPsych.randomization.shuffle(PRECEDENTS).map((p, i) => ({
+    label: "Case " + "ABCD"[i],
+    condition: p.condition,
+    distance: p.distance,
+    depth: p.depth,
+    outcome: outcomes[i],
+    text: p[outcomes[i]]
+  }));
+
+  jsPsych.data.addProperties({
+    participant_id: participantId,
+    target_outcome: targetOutcome,
+    case_order: cases.map(c => c.condition).join("|"),
+    case_outcomes: cases.map(c => c.condition + ":" + c.outcome).join("|")
+  });
+
+  // ---------- Trials ----------
+  const welcome = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div class="text"><div class="icon">🧭</div><h2>Welcome!</h2>
+      <p>In this study you will read a short everyday situation, followed by four past cases.</p>
+      <p>Your task is to pick the past case that you think is <b>most relevant</b> to the situation.</p>
+      <p>There are no right or wrong answers. We are interested in your honest opinion.</p></div>`,
+    choices: ["Begin"],
+    data: { phase: "welcome" }
+  };
+
+  const showTarget = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div class="text"><div class="icon">🎓</div><span class="label">The situation</span>
+      <p class="target">${targetText}</p>
+      <p class="hint">Read this carefully. On the next screen you will see four past cases.</p></div>`,
+    choices: ["Continue"],
+    data: { phase: "target" }
+  };
+
+  const selection = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div class="text"><div class="icon">🔍</div><span class="label">The situation</span>
+      <p class="target">${targetText}</p>
+      <p class="question">Which past case is most relevant to this situation?</p>
+      <p class="hint">Click a case to choose it.</p></div>`,
+    choices: cases.map(c => `<span class="label">${c.label}</span><br>${c.text}`),
+    button_html: '<button class="case-btn">%choice%</button>',
+    on_load: () => document.querySelector("#jspsych-html-button-response-btngroup")?.classList.add("case-choices"),
+    data: { phase: "selection", measure: "selected_case" },
+    on_finish: d => {
+      const c = cases[d.response];
+      d.selected_label = c.label;
+      d.selected_position = d.response + 1;
+      d.selected_condition = c.condition;
+      d.selected_distance = c.distance;
+      d.selected_depth = c.depth;
+      d.selected_outcome = c.outcome;
+      d.selected_matches_target_outcome = c.outcome === targetOutcome;
+    }
+  };
+
+  const goodbye = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div class="text" style="text-align:center"><div class="icon">🎉</div><h2>Thank you!</h2>
+      <p>Thanks for taking part. Click below to finish.</p></div>`,
+    choices: ["Finish"],
+    data: { phase: "end" }
+  };
+
+  // ---------- Timeline ----------
+  jsPsych.run([welcome, showTarget, selection, goodbye]);
+</script>
+</html>
