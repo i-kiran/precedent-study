@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Moral Case Relevance | Collaborator Working Brief</title>
   <meta name="description" content="Collaborator-facing working brief: one accountability target, eight dataset-derived dilemmas, and exploratory 1–7 relevance ratings.">
-  <script src="https://unpkg.com/jspsych@7.3.4"></script>
-  <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet">
   <style>
     :root { --paper:#f7f6f2; --card:#fffefa; --ink:#173139; --muted:#617078; --line:#dce3e0; --green:#146458; --mint:#e6f2ed; --blue:#365f91; --bluebg:#e9f0fb; --gold:#b57833; }
     * { box-sizing:border-box; }
@@ -94,7 +92,7 @@
   </style>
 </head>
 <body>
-  <template id="brief-template">
+  <div id="brief-root">
     <main class="page">
       <header class="masthead">
         <div class="eyebrow">Collaborator working brief · Stimulus design v1</div>
@@ -145,7 +143,63 @@
         <div class="section-eyebrow">04 / Interactive case review</div>
         <h2>How relevant is each case to the target?</h2>
         <p class="section-intro">Rate <strong>each case independently</strong> on a 1–7 scale rather than selecting only the single most relevant case. Think about how useful the prior situation is for reasoning about the target dilemma, not whether you would make the same decision. Dataset wording is preserved below; the mapping explanations are our provisional interpretations.</p>
-        <div id="case-list"></div>
+        <div id="case-list"><div class="group-head"><h3>Accountability</h3><span>Same value as target · Four case comparisons</span></div><div class="case-grid"><article class="case-card" data-case="4663" aria-label="Candidate case 4663">
+<div class="case-top"><span class="case-key">Deep structure · Near context</span><span class="case-id">ID 4663</span></div>
+<h4>Harassment policy and a close colleague</h4>
+<p class="case-text">You work in a company where there&#39;s a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague&#39;s behavior and potentially jeopardize their financial situation?</p>
+<div class="reason"><b>Why this condition?</b>Witnessing another employee&#39;s misconduct and deciding whether to escalate it.</div>
+<div class="rating-area"><span class="rating-question" id="question-4663">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-4663"><label class="rating-option"><input type="radio" name="rating-4663" value="1" aria-label="Case 4663: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="2" aria-label="Case 4663: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="3" aria-label="Case 4663: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="4" aria-label="Case 4663: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="5" aria-label="Case 4663: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="6" aria-label="Case 4663: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="7" aria-label="Case 4663: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="3056" aria-label="Candidate case 3056">
+<div class="case-top"><span class="case-key">Deep structure · Far context</span><span class="case-id">ID 3056</span></div>
+<h4>Bullying by a fellow teacher</h4>
+<p class="case-text">You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend&#39;s behavior to the principal or stay silent to preserve your friendship?</p>
+<div class="reason"><b>Why this condition?</b>Similar observer–misconduct–authority structure, but in a school rather than a marketing firm.</div>
+<div class="rating-area"><span class="rating-question" id="question-3056">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-3056"><label class="rating-option"><input type="radio" name="rating-3056" value="1" aria-label="Case 3056: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="2" aria-label="Case 3056: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="3" aria-label="Case 3056: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="4" aria-label="Case 3056: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="5" aria-label="Case 3056: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="6" aria-label="Case 3056: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="7" aria-label="Case 3056: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="16230" aria-label="Candidate case 16230">
+<div class="case-top"><span class="case-key">Shallow structure · Near context</span><span class="case-id">ID 16230</span></div>
+<h4>A manager&#39;s own reporting mistake</h4>
+<p class="case-text">You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?</p>
+<div class="reason"><b>Why this condition?</b>Workplace accountability, but acknowledging one&#39;s own mistake rather than reporting another person&#39;s misconduct.</div>
+<div class="rating-area"><span class="rating-question" id="question-16230">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-16230"><label class="rating-option"><input type="radio" name="rating-16230" value="1" aria-label="Case 16230: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="2" aria-label="Case 16230: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="3" aria-label="Case 16230: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="4" aria-label="Case 16230: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="5" aria-label="Case 16230: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="6" aria-label="Case 16230: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="7" aria-label="Case 16230: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="7407" aria-label="Candidate case 7407">
+<div class="case-top"><span class="case-key">Shallow structure · Far context</span><span class="case-id">ID 7407</span></div>
+<h4>A damaged borrowed book</h4>
+<p class="case-text">You&#39;ve borrowed a rare book from a friend who&#39;s an avid collector. In the meantime, your sibling, unaware of the book&#39;s origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?</p>
+<div class="reason"><b>Why this condition?</b>Responsibility for entrusted property in a personal relationship, with different actors and decision structure.</div>
+<div class="rating-area"><span class="rating-question" id="question-7407">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-7407"><label class="rating-option"><input type="radio" name="rating-7407" value="1" aria-label="Case 7407: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="2" aria-label="Case 7407: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="3" aria-label="Case 7407: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="4" aria-label="Case 7407: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="5" aria-label="Case 7407: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="6" aria-label="Case 7407: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="7" aria-label="Case 7407: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article></div><div class="group-head"><h3>Safety</h3><span>Contrasting value · Four case comparisons</span></div><div class="case-grid"><article class="case-card" data-case="13115" aria-label="Candidate case 13115">
+<div class="case-top"><span class="case-key">Deep structure · Near context</span><span class="case-id">ID 13115</span></div>
+<h4>Food-safety practices in a restaurant</h4>
+<p class="case-text">You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?</p>
+<div class="reason"><b>Why this condition?</b>Observing a colleague&#39;s concerning conduct and deciding whether to escalate it, with customer safety foregrounded.</div>
+<div class="rating-area"><span class="rating-question" id="question-13115">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-13115"><label class="rating-option"><input type="radio" name="rating-13115" value="1" aria-label="Case 13115: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="2" aria-label="Case 13115: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="3" aria-label="Case 13115: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="4" aria-label="Case 13115: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="5" aria-label="Case 13115: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="6" aria-label="Case 13115: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="7" aria-label="Case 13115: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="7723" aria-label="Candidate case 7723">
+<div class="case-top"><span class="case-key">Deep structure · Far context</span><span class="case-id">ID 7723</span></div>
+<h4>A friend&#39;s school-bus driving</h4>
+<p class="case-text">Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?</p>
+<div class="reason"><b>Why this condition?</b>Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs.</div>
+<div class="rating-area"><span class="rating-question" id="question-7723">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-7723"><label class="rating-option"><input type="radio" name="rating-7723" value="1" aria-label="Case 7723: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="2" aria-label="Case 7723: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="3" aria-label="Case 7723: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="4" aria-label="Case 7723: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="5" aria-label="Case 7723: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="6" aria-label="Case 7723: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="7" aria-label="Case 7723: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="17048" aria-label="Candidate case 17048">
+<div class="case-top"><span class="case-key">Shallow structure · Near context</span><span class="case-id">ID 17048</span></div>
+<h4>A software security flaw</h4>
+<p class="case-text">John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he&#39;s working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?</p>
+<div class="reason"><b>Why this condition?</b>Raising a possible technical risk rather than holding a colleague responsible for misconduct.</div>
+<div class="rating-area"><span class="rating-question" id="question-17048">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-17048"><label class="rating-option"><input type="radio" name="rating-17048" value="1" aria-label="Case 17048: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="2" aria-label="Case 17048: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="3" aria-label="Case 17048: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="4" aria-label="Case 17048: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="5" aria-label="Case 17048: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="6" aria-label="Case 17048: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="7" aria-label="Case 17048: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="43621" aria-label="Candidate case 43621">
+<div class="case-top"><span class="case-key">Shallow structure · Far context</span><span class="case-id">ID 43621</span></div>
+<h4>Canceling a party while sick</h4>
+<p class="case-text">You&#39;ve planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?</p>
+<div class="reason"><b>Why this condition?</b>Changing one&#39;s own plans to avoid harm, rather than escalating another person&#39;s conduct to an authority.</div>
+<div class="rating-area"><span class="rating-question" id="question-43621">How relevant is this prior case for reasoning about the target?</span>
+<div class="rating-row" role="group" aria-labelledby="question-43621"><label class="rating-option"><input type="radio" name="rating-43621" value="1" aria-label="Case 43621: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="2" aria-label="Case 43621: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="3" aria-label="Case 43621: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="4" aria-label="Case 43621: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="5" aria-label="Case 43621: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="6" aria-label="Case 43621: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="7" aria-label="Case 43621: relevance 7 out of 7"><span>7</span></label></div>
+<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article></div></div>
         <div class="toolbar">
           <div><div class="status" id="rating-progress" aria-live="polite">0 of 8 cases rated</div><div id="feedback" aria-live="polite"></div></div>
           <div class="actions">
@@ -167,95 +221,62 @@
 
       <footer class="foot">Source: <a href="https://huggingface.co/datasets/kellycyy/daily_dilemmas" target="_blank" rel="noopener noreferrer">DailyDilemmas</a>. Dataset IDs and case texts are included for traceability. No case outcomes are shown. These are candidate prior dilemmas, not authoritative precedents with established decisions. Ratings remain in this browser session and are never transmitted; exporting or copying is optional.</footer>
     </main>
-  </template>
+  </div>
   <script>
-    "use strict";
-    const CASES = [{"id":4663,"value":"Accountability","depth":"Deep","distance":"Near","title":"Harassment policy and a close colleague","text":"You work in a company where there's a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague's behavior and potentially jeopardize their financial situation?","rationale":"Witnessing another employee's misconduct and deciding whether to escalate it."},{"id":3056,"value":"Accountability","depth":"Deep","distance":"Far","title":"Bullying by a fellow teacher","text":"You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend's behavior to the principal or stay silent to preserve your friendship?","rationale":"Similar observer–misconduct–authority structure, but in a school rather than a marketing firm."},{"id":16230,"value":"Accountability","depth":"Shallow","distance":"Near","title":"A manager's own reporting mistake","text":"You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?","rationale":"Workplace accountability, but acknowledging one's own mistake rather than reporting another person's misconduct."},{"id":7407,"value":"Accountability","depth":"Shallow","distance":"Far","title":"A damaged borrowed book","text":"You've borrowed a rare book from a friend who's an avid collector. In the meantime, your sibling, unaware of the book's origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?","rationale":"Responsibility for entrusted property in a personal relationship, with different actors and decision structure."},{"id":13115,"value":"Safety","depth":"Deep","distance":"Near","title":"Food-safety practices in a restaurant","text":"You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?","rationale":"Observing a colleague's concerning conduct and deciding whether to escalate it, with customer safety foregrounded."},{"id":7723,"value":"Safety","depth":"Deep","distance":"Far","title":"A friend's school-bus driving","text":"Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?","rationale":"Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs."},{"id":17048,"value":"Safety","depth":"Shallow","distance":"Near","title":"A software security flaw","text":"John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he's working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?","rationale":"Raising a possible technical risk rather than holding a colleague responsible for misconduct."},{"id":43621,"value":"Safety","depth":"Shallow","distance":"Far","title":"Canceling a party while sick","text":"You've planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?","rationale":"Changing one's own plans to avoid harm, rather than escalating another person's conduct to an authority."}];
-    function escapeHTML(x) {
-      return String(x).replace(/[&<>"']/g, function(ch) {
-        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
-      });
-    }
-    function buildCard(c) {
-      var inputs = "";
-      for (var n=1;n<=7;n++) {
-        inputs += '<label class="rating-option"><input type="radio" name="rating-' + c.id + '" value="' + n + '" aria-label="Case ' + c.id + ': relevance ' + n + ' out of 7"><span>' + n + '</span></label>';
-      }
-      return '<article class="case-card" data-case="' + c.id + '" aria-label="Candidate case ' + c.id + '">' +
-        '<div class="case-top"><span class="case-key">' + escapeHTML(c.depth) + ' structure · ' + escapeHTML(c.distance) + ' context</span><span class="case-id">ID ' + c.id + '</span></div>' +
-        '<h4>' + escapeHTML(c.title) + '</h4><p class="case-text">' + escapeHTML(c.text) + '</p>' +
-        '<div class="reason"><b>Why this condition?</b>' + escapeHTML(c.rationale) + '</div>' +
-        '<div class="rating-area"><span class="rating-question" id="question-' + c.id + '">How relevant is this prior case for reasoning about the target?</span>' +
-        '<div class="rating-row" role="group" aria-labelledby="question-' + c.id + '">' + inputs + '</div><div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article>';
-    }
-    function buildGroups() {
-      return ["Accountability","Safety"].map(function(value) {
-        var label = value === "Accountability" ? "Same value as target" : "Contrasting value";
-        return '<div class="group-head"><h3>' + value + '</h3><span>' + label + ' · Four case comparisons</span></div><div class="case-grid">' +
-          CASES.filter(function(c) { return c.value===value; }).map(buildCard).join("") + '</div>';
-      }).join("");
-    }
-    class CollaboratorBrief {
-      constructor(jsPsych) { this.jsPsych=jsPsych; }
-      trial(display_element) {
-        display_element.innerHTML = document.getElementById("brief-template").innerHTML;
-        display_element.querySelector("#case-list").innerHTML = buildGroups();
-        var ratings = {};
-        var progress = display_element.querySelector("#rating-progress");
-        var feedback = display_element.querySelector("#feedback");
-        function updateProgress() {
-          progress.textContent = Object.keys(ratings).length + " of " + CASES.length + " cases rated";
-        }
-        function asCSV() {
-          function quote(x) { return '"' + String(x == null ? "" : x).replace(/"/g,'""') + '"'; }
-          var columns = ["dataset_id","value","depth","distance","title","relevance_1_to_7","rationale"];
-          return [columns.join(",")].concat(CASES.map(function(c){
-            return [c.id,c.value,c.depth,c.distance,c.title,ratings[c.id] || "",c.rationale].map(quote).join(",");
-          })).join("\r\n");
-        }
-        function asText() {
-          var text = "Moral Case Relevance · collaborator working brief\nTarget: Marketing firm · accountability · DailyDilemmas #55\nRelational structure: An observer becomes aware of another person's concerning conduct and must decide whether to escalate it to an authority, potentially imposing consequences on that person.\n\n";
-          return text + CASES.map(function(c) {
-            return "#" + c.id + " | " + c.value + " | " + c.depth + " | " + c.distance + " | Relevance: " + (ratings[c.id] || "not rated") + "/7\n" + c.title + "\n" + c.rationale;
-          }).join("\n\n");
-        }
-        display_element.querySelectorAll('input[type="radio"]').forEach(function(input){
-          input.addEventListener("change",function(){
-            var id = Number(this.name.replace("rating-",""));
-            ratings[id] = Number(this.value);
-            var card = this.closest(".case-card");
-            if(card) card.classList.add("rated");
-            feedback.textContent="";
-            updateProgress();
-          });
-        });
-        display_element.querySelector("#download-btn").addEventListener("click",function(){
-          var blob = new Blob([asCSV()],{type:"text/csv;charset=utf-8;"});
-          var url = URL.createObjectURL(blob);
-          var a=document.createElement("a");
-          a.href=url;a.download="moral_case_relevance_review.csv";document.body.appendChild(a);a.click();a.remove();
-          setTimeout(function(){URL.revokeObjectURL(url);},1000);
-          feedback.textContent="CSV prepared locally. Unrated cells are blank.";
-        });
-        display_element.querySelector("#copy-btn").addEventListener("click",function(){
-          if(navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(asText()).then(function(){feedback.textContent="Review summary copied.";},function(){feedback.textContent="Copy unavailable in this browser. Use Download ratings CSV.";});
-          } else {
-            feedback.textContent="Clipboard unavailable in this browser. Use Download ratings CSV.";
-          }
-        });
-        display_element.querySelector("#reset-btn").addEventListener("click",function(){
-          ratings={};
-          display_element.querySelectorAll('input[type="radio"]').forEach(function(input){input.checked=false;});
-          display_element.querySelectorAll(".case-card.rated").forEach(function(card){card.classList.remove("rated");});
-          updateProgress();feedback.textContent="Ratings cleared.";
-        });
-        updateProgress();
-      }
-    }
-    CollaboratorBrief.info={name:"collaborator-brief",parameters:{}};
-    const jsPsych=initJsPsych({show_progress_bar:false});
-    jsPsych.run([{type:CollaboratorBrief}]);
-  </script>
+"use strict";
+const CASES = [{"id":4663,"value":"Accountability","depth":"Deep","distance":"Near","title":"Harassment policy and a close colleague","text":"You work in a company where there's a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague's behavior and potentially jeopardize their financial situation?","rationale":"Witnessing another employee's misconduct and deciding whether to escalate it."},{"id":3056,"value":"Accountability","depth":"Deep","distance":"Far","title":"Bullying by a fellow teacher","text":"You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend's behavior to the principal or stay silent to preserve your friendship?","rationale":"Similar observer–misconduct–authority structure, but in a school rather than a marketing firm."},{"id":16230,"value":"Accountability","depth":"Shallow","distance":"Near","title":"A manager's own reporting mistake","text":"You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?","rationale":"Workplace accountability, but acknowledging one's own mistake rather than reporting another person's misconduct."},{"id":7407,"value":"Accountability","depth":"Shallow","distance":"Far","title":"A damaged borrowed book","text":"You've borrowed a rare book from a friend who's an avid collector. In the meantime, your sibling, unaware of the book's origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?","rationale":"Responsibility for entrusted property in a personal relationship, with different actors and decision structure."},{"id":13115,"value":"Safety","depth":"Deep","distance":"Near","title":"Food-safety practices in a restaurant","text":"You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?","rationale":"Observing a colleague's concerning conduct and deciding whether to escalate it, with customer safety foregrounded."},{"id":7723,"value":"Safety","depth":"Deep","distance":"Far","title":"A friend's school-bus driving","text":"Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?","rationale":"Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs."},{"id":17048,"value":"Safety","depth":"Shallow","distance":"Near","title":"A software security flaw","text":"John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he's working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?","rationale":"Raising a possible technical risk rather than holding a colleague responsible for misconduct."},{"id":43621,"value":"Safety","depth":"Shallow","distance":"Far","title":"Canceling a party while sick","text":"You've planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?","rationale":"Changing one's own plans to avoid harm, rather than escalating another person's conduct to an authority."}];
+(function() {
+  const ratings = {};
+  const progress = document.getElementById("rating-progress");
+  const feedback = document.getElementById("feedback");
+  function updateProgress() {
+    progress.textContent = Object.keys(ratings).length + " of " + CASES.length + " cases rated";
+  }
+  function csvQuote(v) { return '"' + String(v == null ? "" : v).replace(/"/g,'""') + '"'; }
+  function asCSV() {
+    const columns = ["dataset_id","value","depth","distance","title","relevance_1_to_7","rationale"];
+    return [columns.join(",")].concat(CASES.map(c =>
+      [c.id,c.value,c.depth,c.distance,c.title,ratings[c.id] ?? "",c.rationale].map(csvQuote).join(",")
+    )).join("\r\n");
+  }
+  function asText() {
+    return "Moral Case Relevance · collaborator working brief\nTarget: Marketing firm · accountability · DailyDilemmas #55\n\n" +
+      CASES.map(c => "#" + c.id + " | " + c.value + " | " + c.depth + " | " + c.distance +
+      " | Relevance: " + (ratings[c.id] ?? "not rated") + "/7\n" + c.title + "\n" + c.rationale).join("\n\n");
+  }
+  document.querySelectorAll('input[type="radio"]').forEach(input => {
+    input.addEventListener("change", function() {
+      const id = Number(this.name.replace("rating-",""));
+      ratings[id] = Number(this.value);
+      this.closest(".case-card").classList.add("rated");
+      feedback.textContent = "";
+      updateProgress();
+    });
+  });
+  document.getElementById("download-btn").addEventListener("click", () => {
+    const url = URL.createObjectURL(new Blob([asCSV()],{type:"text/csv;charset=utf-8;"}));
+    const link = document.createElement("a");
+    link.href=url;link.download="moral_case_relevance_review.csv";
+    document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    feedback.textContent="CSV prepared locally. Unrated cells are blank.";
+  });
+  document.getElementById("copy-btn").addEventListener("click", () => {
+    if(navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(asText()).then(
+        ()=>feedback.textContent="Review summary copied.",
+        ()=>feedback.textContent="Copy unavailable. Use Download ratings CSV."
+      );
+    } else { feedback.textContent="Clipboard unavailable. Use Download ratings CSV."; }
+  });
+  document.getElementById("reset-btn").addEventListener("click", () => {
+    Object.keys(ratings).forEach(k=>delete ratings[k]);
+    document.querySelectorAll('input[type="radio"]').forEach(input=>input.checked=false);
+    document.querySelectorAll(".case-card.rated").forEach(card=>card.classList.remove("rated"));
+    updateProgress();feedback.textContent="Ratings cleared.";
+  });
+  updateProgress();
+})();
+</script>
 </body>
 </html>
