@@ -1,282 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Moral Case Relevance | Collaborator Working Brief</title>
-  <meta name="description" content="Collaborator-facing working brief: one accountability target, eight dataset-derived dilemmas, and exploratory 1–7 relevance ratings.">
-  <style>
-    :root { --paper:#f7f6f2; --card:#fffefa; --ink:#173139; --muted:#617078; --line:#dce3e0; --green:#146458; --mint:#e6f2ed; --blue:#365f91; --bluebg:#e9f0fb; --gold:#b57833; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body, .jspsych-display-element, .jspsych-display-element button { font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-    body { background:var(--paper);color:var(--ink); margin:0; }
-    .jspsych-display-element { background:var(--paper); min-height:100vh; }
-    .jspsych-content-wrapper { display:block; }
-    .jspsych-content { max-width:1250px; width:100%; padding:0 22px 75px; text-align:left; }
-    h1,h2,h3,p { margin-top:0; }
-    p { line-height:1.65; }
-    a { color:var(--green); }
-    .page { max-width:1180px; margin:auto; }
-    .eyebrow { letter-spacing:.12em;text-transform:uppercase;font-size:.73rem;font-weight:800;color:var(--green); }
-    .masthead { padding:58px 0 24px; border-bottom:1px solid var(--line); }
-    .masthead h1 { max-width:850px; margin:13px 0 12px; font-size:clamp(2.2rem,5vw,4.2rem);letter-spacing:-.055em;line-height:1.07;font-weight:780; }
-    .lede { max-width:790px;font-size:1.1rem;color:var(--muted);margin-bottom:22px; }
-    .facts { display:flex;flex-wrap:wrap; gap:8px; }
-    .fact { border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:.82rem;font-weight:650;background:#fff; }
-    .nav { display:flex;flex-wrap:wrap;gap:21px;padding:19px 0 7px;font-size:.86rem;font-weight:700; }
-    .nav a { text-decoration:none;color:var(--muted); }
-    .nav a:hover { color:var(--green); }
-    section { margin-top:47px; scroll-margin-top:20px; }
-    .section-eyebrow { font-size:.77rem;letter-spacing:.1em;font-weight:800;color:var(--green);text-transform:uppercase; }
-    h2 { font-size:clamp(1.45rem,2.6vw,2rem); letter-spacing:-.03em;margin:7px 0 11px; }
-    .section-intro { max-width:850px;color:var(--muted);font-size:.96rem; }
-    .framework { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px; }
-    .framework-item,.target-card,.panel,.case-card { background:var(--card);border:1px solid var(--line);border-radius:15px; }
-    .framework-item { padding:22px 20px; }
-    .framework-item .number { font-size:.8rem;color:var(--gold);font-weight:850; }
-    .framework-item h3 { font-size:1.07rem;margin:8px 0;letter-spacing:-.02em; }
-    .framework-item p { font-size:.9rem;color:var(--muted);margin-bottom:0; }
-    .target-card { padding:clamp(22px,4vw,37px);border-left:5px solid var(--green); }
-    .target-prompt { font-size:clamp(1.12rem,2vw,1.4rem);line-height:1.6;max-width:960px;font-weight:570; }
-    .tag-row { display:flex; flex-wrap:wrap;gap:7px;margin:13px 0 18px; }
-    .tag { display:inline-block; padding:5px 10px;background:var(--mint);color:var(--green);font-size:.74rem;font-weight:800;border-radius:999px; }
-    .tag.blue { color:var(--blue);background:var(--bluebg); }
-    .target-notes { display:grid;grid-template-columns:1fr 1.5fr;gap:14px; }
-    .note { padding:14px 16px;background:#f3f6f3;border-radius:9px;font-size:.89rem;line-height:1.6; }
-    .note strong { display:block;margin-bottom:4px; }
-    .matrix-wrap { overflow:auto; background:#fff;border:1px solid var(--line);border-radius:13px;margin-top:18px; }
-    table { width:100%;border-collapse:collapse;font-size:.91rem; }
-    th,td { padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top; }
-    thead th { color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;background:#f4f7f5; }
-    tbody tr:last-child td { border-bottom:none; }
-    .muted { color:var(--muted); }
-    .group-head { margin:32px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap; }
-    .group-head h3 { font-size:1.3rem;margin:0; }
-    .group-head span { color:var(--muted);font-size:.87rem; }
-    .case-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch; }
-    .case-card { display:flex;flex-direction:column;padding:23px;position:relative; }
-    .case-card.rated { border-color:#7fb4a7;box-shadow:0 0 0 1px #7fb4a7; }
-    .case-top { display:flex;justify-content:space-between;gap:8px;align-items:flex-start; }
-    .case-key { font-size:.72rem;font-weight:820;color:var(--green);letter-spacing:.075em;text-transform:uppercase; }
-    .case-id { font-size:.75rem;color:var(--muted);font-weight:720;white-space:nowrap; }
-    .case-card h4 { margin:12px 0 12px;font-size:1.18rem;letter-spacing:-.025em;line-height:1.3; }
-    .case-text { font-size:.93rem;line-height:1.65;margin-bottom:18px; }
-    .reason { margin-top:auto;padding:13px 15px;border-radius:10px;background:#f3f6f3;color:#3c5557;font-size:.85rem;line-height:1.5; }
-    .reason b { color:var(--ink);display:block;margin-bottom:4px; }
-    .rating-area { padding-top:16px; margin-top:15px; border-top:1px solid var(--line); }
-    .rating-question { display:block;font-size:.88rem;font-weight:750;line-height:1.5;margin-bottom:12px; }
-    .rating-row { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px; }
-    .rating-option { cursor:pointer;position:relative; }
-    .rating-option input { position:absolute;opacity:0;width:1px;height:1px; }
-    .rating-option span { display:block;text-align:center;padding:10px 0;border:1px solid #ced9d5;border-radius:8px;background:#fff;font-weight:750;font-size:.9rem; }
-    .rating-option:hover span { border-color:var(--green);background:var(--mint); }
-    .rating-option input:checked+span { background:var(--green);color:#fff;border-color:var(--green); }
-    .rating-option input:focus-visible+span { outline:3px solid #94b8e3;outline-offset:2px; }
-    .scale-ends { display:flex;justify-content:space-between;color:var(--muted);font-size:.72rem;gap:12px;margin-top:9px; }
-    .toolbar { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:20px 23px;margin-top:27px;background:#e8f1ed;border:1px solid #cbded5;border-radius:13px; }
-    .status { font-size:.87rem;font-weight:750; }
-    .actions { display:flex;flex-wrap:wrap;gap:8px; }
-    button { cursor:pointer;font:inherit; }
-    .action-btn { background:var(--green);border:1px solid var(--green);color:white;padding:10px 15px;border-radius:9px;font-size:.84rem;font-weight:760; }
-    .action-btn.secondary { background:white;color:var(--green); }
-    .action-btn:hover { filter:brightness(.94); }
-    .action-btn:focus-visible { outline:3px solid #94b8e3;outline-offset:2px; }
-    .caution { background:#fff9f0;border:1px solid #ecd8b8;border-radius:13px;padding:20px 24px; }
-    .caution h3 { margin-bottom:8px;font-size:1.06rem; }
-    .caution p { font-size:.92rem;color:#68533d; margin-bottom:0; }
-    .foot { padding-top:25px;border-top:1px solid var(--line);color:var(--muted);font-size:.79rem;line-height:1.6; }
-    #feedback { font-size:.8rem;color:var(--green);min-height:1.2em;font-weight:700; }
-    @media(max-width:800px) { .framework,.case-grid,.target-notes { grid-template-columns:1fr; } .masthead { padding-top:37px; } .case-card { padding:19px; } .jspsych-content { padding:0 15px 45px; } }
-    @media(prefers-reduced-motion:reduce) { html {scroll-behavior:auto;} }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moral Case Relevance | Working Walkthrough</title>
+<meta name="description" content="An interactive collaborator walkthrough of a conceptual 2 × 2 × 2 design, one target, and eight prior moral dilemmas.">
+<style>
+:root {
+  --uw-purple:#4b2e83;
+  --purple-light:#eee9f6;
+  --ink:#222226;
+  --muted:#66636c;
+  --line:#dcd9e1;
+  --bg:#f6f6f7;
+  --white:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible+span{outline:3px solid var(--uw-purple);outline-offset:3px}
+.shell{max-width:940px;margin:0 auto;padding:0 25px 65px}
+.topline{border-bottom:1px solid var(--line);background:var(--white)}
+.topline-inner{max-width:940px;margin:auto;padding:18px 25px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:780;letter-spacing:-.02em;color:var(--uw-purple)}
+.scope{font-size:.8rem;color:var(--muted);text-align:right}
+.progressbar{background:#e2e0e6;height:4px}
+.progressbar div{height:100%;background:var(--uw-purple);transition:width .18s ease}
+.stepmeta{display:flex;justify-content:space-between;gap:12px;margin-top:37px;font-size:.82rem;color:var(--muted);font-weight:650}
+.content{padding-top:16px;min-height:360px}
+.eyebrow{text-transform:uppercase;color:var(--uw-purple);font-weight:820;letter-spacing:.095em;font-size:.75rem;margin-bottom:11px}
+h1{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.15;letter-spacing:-.04em;margin:0 0 16px}
+h2{font-size:clamp(1.35rem,2.6vw,1.8rem);letter-spacing:-.03em;margin:0 0 14px}
+p{line-height:1.65}
+.intro{color:var(--muted);max-width:720px;margin-bottom:25px}
+.card,.feature,.case,.target-box{background:var(--white);border:1px solid var(--line);border-radius:11px;padding:23px}
+.card{margin-top:16px}
+.minor{font-size:.81rem;color:var(--muted);line-height:1.5}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 25px}
+.feature{padding:18px 17px}
+.feature strong{display:block;font-size:.92rem;margin-bottom:8px}
+.feature .pair{display:flex;gap:7px;align-items:center;flex-wrap:wrap;font-weight:680;color:var(--uw-purple);font-size:.82rem}
+.feature .between{color:var(--muted);font-weight:400;font-size:.75rem}
+.table-wrap{overflow-x:auto;background:var(--white);border:1px solid var(--line);border-radius:11px;margin:16px 0 12px}
+table{width:100%;border-collapse:collapse;font-size:.87rem}
+th,td{text-align:left;vertical-align:middle;padding:15px 15px;border-bottom:1px solid var(--line)}
+thead th{color:var(--muted);font-size:.76rem;font-weight:760;background:#f0eff3}
+tbody th{min-width:138px;font-weight:780;color:var(--uw-purple)}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+.table-cell{font-weight:700;text-align:center;background:var(--purple-light);border-radius:6px;padding:12px 6px;color:var(--uw-purple)}
+.matrix-note{font-size:.84rem;color:var(--muted);margin-top:12px}
+.pill-list{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0 17px}
+.pill{background:var(--purple-light);color:var(--uw-purple);border-radius:6px;padding:5px 10px;font-size:.78rem;font-weight:740}
+.target-quote{font-size:clamp(1.08rem,2vw,1.33rem);font-weight:570;line-height:1.65;margin:7px 0 15px}
+.note-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:14px;margin-top:18px}
+.note{background:#f4f3f6;padding:16px;border-radius:8px;font-size:.88rem;line-height:1.6}
+.note strong{display:block;margin-bottom:6px}
+.micro-title{font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 9px}
+.target-mini{border:1px solid var(--line);border-left:4px solid var(--uw-purple);background:var(--white);border-radius:8px;padding:17px 19px;margin:14px 0 20px}
+.target-mini p{font-size:.91rem;margin:0;line-height:1.62}
+.case{padding:26px}
+.case-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.case-title{font-size:1.4rem;letter-spacing:-.025em;margin:10px 0 15px}
+.case-text{font-size:1rem;line-height:1.72;margin:0}
+.classification{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0}
+.classification span{border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:.78rem;font-weight:700;color:#50495b;background:#faf9fc}
+.rationale{background:#f3f2f5;border-radius:8px;padding:15px 17px;margin:17px 0 22px;color:#45424b;font-size:.89rem;line-height:1.6}
+.rationale strong{display:block;color:var(--ink);margin-bottom:5px}
+.rating-question{font-weight:760;margin:0 0 15px;font-size:.96rem}
+.ratings{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
+.rating-choice{position:relative;cursor:pointer}
+.rating-choice input{opacity:0;position:absolute;width:1px;height:1px}
+.rating-choice span{display:block;text-align:center;padding:13px 2px;border:1.5px solid var(--line);border-radius:8px;background:var(--white);font-weight:780;color:var(--ink)}
+.rating-choice:hover span{border-color:var(--uw-purple);background:var(--purple-light)}
+.rating-choice input:checked+span{background:var(--uw-purple);border-color:var(--uw-purple);color:var(--white)}
+.anchors{display:flex;justify-content:space-between;gap:12px;margin:10px 0 0;color:var(--muted);font-size:.78rem}
+.saved{min-height:20px;color:var(--uw-purple);font-size:.81rem;font-weight:760;margin-top:13px}
+.controls{display:flex;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:21px;margin-top:27px}
+.btn{border:1px solid var(--uw-purple);background:var(--uw-purple);color:white;padding:12px 20px;border-radius:7px;font-weight:750}
+.btn:hover{background:#3e286a}
+.btn.secondary{background:var(--white);color:var(--uw-purple)}
+.btn.secondary:hover{background:var(--purple-light)}
+.btn:disabled{opacity:.45;cursor:default}
+.counted{font-size:.83rem;color:var(--muted);text-align:center}
+.result-list{display:grid;gap:8px;margin:20px 0}
+.result-row{background:white;border:1px solid var(--line);border-radius:8px;display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px 16px;align-items:center}
+.result-row strong{font-size:.9rem}
+.result-row small{display:block;color:var(--muted);margin-top:4px}
+.score{font-size:1.1rem;font-weight:820;color:var(--uw-purple);white-space:nowrap}
+.downloads{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+.disclaimer{background:white;border:1px solid var(--line);padding:19px;border-radius:9px;margin:25px 0;color:#55525c;font-size:.89rem;line-height:1.7}
+.source{font-size:.79rem;color:var(--muted);margin-top:21px}
+a{color:var(--uw-purple)}
+@media(max-width:650px){.shell{padding:0 15px 40px}.topline-inner{padding:15px}.feature-grid,.note-grid{grid-template-columns:1fr}.case,.card,.target-box{padding:18px}.stepmeta{margin-top:23px}.ratings{gap:4px}.rating-choice span{padding:12px 0}.scope{font-size:.72rem}.controls{gap:7px}.btn{padding:11px 13px}.table-wrap{font-size:.75rem}th,td{padding:9px 8px}.table-cell{font-size:.73rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.progressbar div{transition:none}}
+</style>
 </head>
 <body>
-  <div id="brief-root">
-    <main class="page">
-      <header class="masthead">
-        <div class="eyebrow">Collaborator working brief · Stimulus design v1</div>
-        <h1>What makes a prior moral case relevant?</h1>
-        <p class="lede">An exploratory case-relevance exercise built around one workplace accountability dilemma and eight candidate prior cases from DailyDilemmas. This is a research walkthrough, not a formal participant study.</p>
-        <div class="facts"><span class="fact">1 fixed target</span><span class="fact">8 candidate cases</span><span class="fact">2 values × 2 depths × 2 distances</span><span class="fact">1–7 relevance judgments</span></div>
-      </header>
-      <nav class="nav" aria-label="Document sections"><a href="#framework">Logic of the design</a><a href="#target">Target case</a><a href="#matrix">Condition matrix</a><a href="#cases">Review the cases</a><a href="#limits">What remains uncertain</a></nav>
-
-      <section id="framework">
-        <div class="section-eyebrow">01 / Research question</div>
-        <h2>Why might one case help us reason about another?</h2>
-        <p class="section-intro">We are exploring whether perceived relevance depends on shared moral values, correspondence in the underlying relations between actors, or similarity in institutional setting. These are <strong>proposed distinctions to validate</strong>, not already-proven independent factors.</p>
-        <div class="framework">
-          <div class="framework-item"><div class="number">A / VALUE</div><h3>Which moral concern?</h3><p><strong>Accountability</strong> is present in the target; <strong>safety</strong> is our contrasting value. A label match alone does not guarantee that cases share a precise normative principle.</p></div>
-          <div class="framework-item"><div class="number">B / DEPTH</div><h3>How are the roles and relations aligned?</h3><p><strong>Deep:</strong> an observer encounters another person's concerning conduct and considers escalating it to an authority. <strong>Shallow:</strong> the decision follows a different relational pattern.</p></div>
-          <div class="framework-item"><div class="number">C / DISTANCE</div><h3>How similar is the setting?</h3><p><strong>Near:</strong> a workplace or professional organizational setting. <strong>Far:</strong> an educational, friendship, family, or social context outside ordinary workplace roles.</p></div>
-        </div>
-      </section>
-
-      <section id="target">
-        <div class="section-eyebrow">02 / Fixed reference point</div>
-        <h2>Target: workplace accountability</h2>
-        <div class="target-card">
-          <div class="tag-row"><span class="tag">Accountability</span><span class="tag blue">Workplace</span><span class="tag blue">DailyDilemmas · #55</span></div>
-          <p class="target-prompt">You're a project manager in a marketing firm. You notice a colleague using company resources for a personal project during office hours, undermining the company's policy. Should you take initiative and report this to your superior?</p>
-          <div class="target-notes">
-            <div class="note"><strong>Why accountability?</strong> It operates at two levels: the colleague's answerability for their use of shared resources, and the project manager's potential responsibility to address or report the conduct.</div>
-            <div class="note"><strong>Proposed relational structure</strong>An observer becomes aware of another person's concerning conduct and must decide whether to escalate it to an authority, potentially imposing consequences on that person.</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="matrix">
-        <div class="section-eyebrow">03 / Stimulus construction</div>
-        <h2>Eight cells, one candidate in each</h2>
-        <p class="section-intro">We hold the target constant and vary value, proposed structural depth, and contextual distance across the candidate cases. Every case is a dilemma without an observed resolution.</p>
-        <div class="matrix-wrap"><table>
-          <thead><tr><th>Value relative to target</th><th>Deep · Near</th><th>Deep · Far</th><th>Shallow · Near</th><th>Shallow · Far</th></tr></thead>
-          <tbody>
-            <tr><th>Accountability (same)</th><td>#4663<br><span class="muted">Colleague bullying</span></td><td>#3056<br><span class="muted">Teacher bullying</span></td><td>#16230<br><span class="muted">Manager's mistake</span></td><td>#7407<br><span class="muted">Borrowed book</span></td></tr>
-            <tr><th>Safety (different)</th><td>#13115<br><span class="muted">Restaurant hygiene</span></td><td>#7723<br><span class="muted">School-bus driver</span></td><td>#17048<br><span class="muted">Security flaw</span></td><td>#43621<br><span class="muted">Party while ill</span></td></tr>
-          </tbody>
-        </table></div>
-      </section>
-
-      <section id="cases">
-        <div class="section-eyebrow">04 / Interactive case review</div>
-        <h2>How relevant is each case to the target?</h2>
-        <p class="section-intro">Rate <strong>each case independently</strong> on a 1–7 scale rather than selecting only the single most relevant case. Think about how useful the prior situation is for reasoning about the target dilemma, not whether you would make the same decision. Dataset wording is preserved below; the mapping explanations are our provisional interpretations.</p>
-        <div id="case-list"><div class="group-head"><h3>Accountability</h3><span>Same value as target · Four case comparisons</span></div><div class="case-grid"><article class="case-card" data-case="4663" aria-label="Candidate case 4663">
-<div class="case-top"><span class="case-key">Deep structure · Near context</span><span class="case-id">ID 4663</span></div>
-<h4>Harassment policy and a close colleague</h4>
-<p class="case-text">You work in a company where there&#39;s a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague&#39;s behavior and potentially jeopardize their financial situation?</p>
-<div class="reason"><b>Why this condition?</b>Witnessing another employee&#39;s misconduct and deciding whether to escalate it.</div>
-<div class="rating-area"><span class="rating-question" id="question-4663">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-4663"><label class="rating-option"><input type="radio" name="rating-4663" value="1" aria-label="Case 4663: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="2" aria-label="Case 4663: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="3" aria-label="Case 4663: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="4" aria-label="Case 4663: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="5" aria-label="Case 4663: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="6" aria-label="Case 4663: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-4663" value="7" aria-label="Case 4663: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="3056" aria-label="Candidate case 3056">
-<div class="case-top"><span class="case-key">Deep structure · Far context</span><span class="case-id">ID 3056</span></div>
-<h4>Bullying by a fellow teacher</h4>
-<p class="case-text">You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend&#39;s behavior to the principal or stay silent to preserve your friendship?</p>
-<div class="reason"><b>Why this condition?</b>Similar observer–misconduct–authority structure, but in a school rather than a marketing firm.</div>
-<div class="rating-area"><span class="rating-question" id="question-3056">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-3056"><label class="rating-option"><input type="radio" name="rating-3056" value="1" aria-label="Case 3056: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="2" aria-label="Case 3056: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="3" aria-label="Case 3056: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="4" aria-label="Case 3056: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="5" aria-label="Case 3056: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="6" aria-label="Case 3056: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-3056" value="7" aria-label="Case 3056: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="16230" aria-label="Candidate case 16230">
-<div class="case-top"><span class="case-key">Shallow structure · Near context</span><span class="case-id">ID 16230</span></div>
-<h4>A manager&#39;s own reporting mistake</h4>
-<p class="case-text">You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?</p>
-<div class="reason"><b>Why this condition?</b>Workplace accountability, but acknowledging one&#39;s own mistake rather than reporting another person&#39;s misconduct.</div>
-<div class="rating-area"><span class="rating-question" id="question-16230">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-16230"><label class="rating-option"><input type="radio" name="rating-16230" value="1" aria-label="Case 16230: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="2" aria-label="Case 16230: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="3" aria-label="Case 16230: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="4" aria-label="Case 16230: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="5" aria-label="Case 16230: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="6" aria-label="Case 16230: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-16230" value="7" aria-label="Case 16230: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="7407" aria-label="Candidate case 7407">
-<div class="case-top"><span class="case-key">Shallow structure · Far context</span><span class="case-id">ID 7407</span></div>
-<h4>A damaged borrowed book</h4>
-<p class="case-text">You&#39;ve borrowed a rare book from a friend who&#39;s an avid collector. In the meantime, your sibling, unaware of the book&#39;s origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?</p>
-<div class="reason"><b>Why this condition?</b>Responsibility for entrusted property in a personal relationship, with different actors and decision structure.</div>
-<div class="rating-area"><span class="rating-question" id="question-7407">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-7407"><label class="rating-option"><input type="radio" name="rating-7407" value="1" aria-label="Case 7407: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="2" aria-label="Case 7407: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="3" aria-label="Case 7407: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="4" aria-label="Case 7407: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="5" aria-label="Case 7407: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="6" aria-label="Case 7407: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-7407" value="7" aria-label="Case 7407: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article></div><div class="group-head"><h3>Safety</h3><span>Contrasting value · Four case comparisons</span></div><div class="case-grid"><article class="case-card" data-case="13115" aria-label="Candidate case 13115">
-<div class="case-top"><span class="case-key">Deep structure · Near context</span><span class="case-id">ID 13115</span></div>
-<h4>Food-safety practices in a restaurant</h4>
-<p class="case-text">You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?</p>
-<div class="reason"><b>Why this condition?</b>Observing a colleague&#39;s concerning conduct and deciding whether to escalate it, with customer safety foregrounded.</div>
-<div class="rating-area"><span class="rating-question" id="question-13115">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-13115"><label class="rating-option"><input type="radio" name="rating-13115" value="1" aria-label="Case 13115: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="2" aria-label="Case 13115: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="3" aria-label="Case 13115: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="4" aria-label="Case 13115: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="5" aria-label="Case 13115: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="6" aria-label="Case 13115: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-13115" value="7" aria-label="Case 13115: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="7723" aria-label="Candidate case 7723">
-<div class="case-top"><span class="case-key">Deep structure · Far context</span><span class="case-id">ID 7723</span></div>
-<h4>A friend&#39;s school-bus driving</h4>
-<p class="case-text">Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?</p>
-<div class="reason"><b>Why this condition?</b>Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs.</div>
-<div class="rating-area"><span class="rating-question" id="question-7723">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-7723"><label class="rating-option"><input type="radio" name="rating-7723" value="1" aria-label="Case 7723: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="2" aria-label="Case 7723: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="3" aria-label="Case 7723: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="4" aria-label="Case 7723: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="5" aria-label="Case 7723: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="6" aria-label="Case 7723: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-7723" value="7" aria-label="Case 7723: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="17048" aria-label="Candidate case 17048">
-<div class="case-top"><span class="case-key">Shallow structure · Near context</span><span class="case-id">ID 17048</span></div>
-<h4>A software security flaw</h4>
-<p class="case-text">John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he&#39;s working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?</p>
-<div class="reason"><b>Why this condition?</b>Raising a possible technical risk rather than holding a colleague responsible for misconduct.</div>
-<div class="rating-area"><span class="rating-question" id="question-17048">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-17048"><label class="rating-option"><input type="radio" name="rating-17048" value="1" aria-label="Case 17048: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="2" aria-label="Case 17048: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="3" aria-label="Case 17048: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="4" aria-label="Case 17048: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="5" aria-label="Case 17048: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="6" aria-label="Case 17048: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-17048" value="7" aria-label="Case 17048: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article><article class="case-card" data-case="43621" aria-label="Candidate case 43621">
-<div class="case-top"><span class="case-key">Shallow structure · Far context</span><span class="case-id">ID 43621</span></div>
-<h4>Canceling a party while sick</h4>
-<p class="case-text">You&#39;ve planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?</p>
-<div class="reason"><b>Why this condition?</b>Changing one&#39;s own plans to avoid harm, rather than escalating another person&#39;s conduct to an authority.</div>
-<div class="rating-area"><span class="rating-question" id="question-43621">How relevant is this prior case for reasoning about the target?</span>
-<div class="rating-row" role="group" aria-labelledby="question-43621"><label class="rating-option"><input type="radio" name="rating-43621" value="1" aria-label="Case 43621: relevance 1 out of 7"><span>1</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="2" aria-label="Case 43621: relevance 2 out of 7"><span>2</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="3" aria-label="Case 43621: relevance 3 out of 7"><span>3</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="4" aria-label="Case 43621: relevance 4 out of 7"><span>4</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="5" aria-label="Case 43621: relevance 5 out of 7"><span>5</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="6" aria-label="Case 43621: relevance 6 out of 7"><span>6</span></label><label class="rating-option"><input type="radio" name="rating-43621" value="7" aria-label="Case 43621: relevance 7 out of 7"><span>7</span></label></div>
-<div class="scale-ends"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div></div></article></div></div>
-        <div class="toolbar">
-          <div><div class="status" id="rating-progress" aria-live="polite">0 of 8 cases rated</div><div id="feedback" aria-live="polite"></div></div>
-          <div class="actions">
-            <button type="button" class="action-btn" id="download-btn">Download ratings CSV</button>
-            <button type="button" class="action-btn secondary" id="copy-btn">Copy review summary</button>
-            <button type="button" class="action-btn secondary" id="reset-btn">Clear ratings</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="limits">
-        <div class="section-eyebrow">05 / Interpretation</div>
-        <h2>What this prototype can, and cannot, establish</h2>
-        <div class="caution">
-          <h3>Working hypotheses, not validated manipulations</h3>
-          <p>Safety and accountability can co-occur; the contrast is not necessarily exclusive. “Deep” cases differ in how the observer learns about the conduct, and “near” professional contexts (such as restaurants and software teams) are not identical to marketing firms. Severity, uncertainty, and personal relationships also vary. A separate pilot should test perceived value similarity, relational alignment, contextual distance, and severity before treating these as orthogonal factors. A relevance rating alone cannot identify which feature caused the rating.</p>
-        </div>
-      </section>
-
-      <footer class="foot">Source: <a href="https://huggingface.co/datasets/kellycyy/daily_dilemmas" target="_blank" rel="noopener noreferrer">DailyDilemmas</a>. Dataset IDs and case texts are included for traceability. No case outcomes are shown. These are candidate prior dilemmas, not authoritative precedents with established decisions. Ratings remain in this browser session and are never transmitted; exporting or copying is optional.</footer>
-    </main>
+<header class="topline"><div class="topline-inner"><div class="brand">Moral Case Relevance</div><div class="scope">Collaborator walkthrough · Working draft</div></div><div class="progressbar"><div id="progress-fill" style="width:9.09%"></div></div></header>
+<main class="shell">
+<div class="stepmeta"><span id="phase">Conceptual framework</span><span id="step-count">Step 1 of 11</span></div>
+<div class="content" id="screen" aria-live="polite">
+  <div class="eyebrow">01 / The framework</div>
+  <h1>What makes one prior case relevant to another?</h1>
+  <p class="intro">We compare cases along three dimensions, each with two levels.</p>
+  <div class="feature-grid">
+    <div class="feature"><strong>Value similarity</strong><div class="pair">Same <span class="between">vs.</span> Different</div></div>
+    <div class="feature"><strong>Structural depth</strong><div class="pair">Deep <span class="between">vs.</span> Shallow</div></div>
+    <div class="feature"><strong>Contextual distance</strong><div class="pair">Near <span class="between">vs.</span> Far</div></div>
   </div>
-  <script>
+  <h2>The 2 × 2 × 2 design</h2>
+  <div class="table-wrap"><table><thead><tr><th>Value</th><th>Deep · Near</th><th>Deep · Far</th><th>Shallow · Near</th><th>Shallow · Far</th></tr></thead><tbody>
+    <tr><th>Same</th><td><div class="table-cell">01</div></td><td><div class="table-cell">02</div></td><td><div class="table-cell">03</div></td><td><div class="table-cell">04</div></td></tr>
+    <tr><th>Different</th><td><div class="table-cell">05</div></td><td><div class="table-cell">06</div></td><td><div class="table-cell">07</div></td><td><div class="table-cell">08</div></td></tr>
+  </tbody></table></div>
+  <p class="matrix-note">Eight distinct combinations. Next: a fixed target and a concrete case for each cell.</p>
+</div>
+<nav class="controls" aria-label="Step navigation">
+  <button type="button" class="btn secondary" id="back" disabled>Back</button>
+  <span class="counted" id="rated-count">0 of 8 rated</span>
+  <button type="button" class="btn" id="next">See target →</button>
+</nav>
+</main>
+<script>
 "use strict";
 const CASES = [{"id":4663,"value":"Accountability","depth":"Deep","distance":"Near","title":"Harassment policy and a close colleague","text":"You work in a company where there's a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague's behavior and potentially jeopardize their financial situation?","rationale":"Witnessing another employee's misconduct and deciding whether to escalate it."},{"id":3056,"value":"Accountability","depth":"Deep","distance":"Far","title":"Bullying by a fellow teacher","text":"You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend's behavior to the principal or stay silent to preserve your friendship?","rationale":"Similar observer–misconduct–authority structure, but in a school rather than a marketing firm."},{"id":16230,"value":"Accountability","depth":"Shallow","distance":"Near","title":"A manager's own reporting mistake","text":"You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?","rationale":"Workplace accountability, but acknowledging one's own mistake rather than reporting another person's misconduct."},{"id":7407,"value":"Accountability","depth":"Shallow","distance":"Far","title":"A damaged borrowed book","text":"You've borrowed a rare book from a friend who's an avid collector. In the meantime, your sibling, unaware of the book's origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?","rationale":"Responsibility for entrusted property in a personal relationship, with different actors and decision structure."},{"id":13115,"value":"Safety","depth":"Deep","distance":"Near","title":"Food-safety practices in a restaurant","text":"You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?","rationale":"Observing a colleague's concerning conduct and deciding whether to escalate it, with customer safety foregrounded."},{"id":7723,"value":"Safety","depth":"Deep","distance":"Far","title":"A friend's school-bus driving","text":"Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?","rationale":"Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs."},{"id":17048,"value":"Safety","depth":"Shallow","distance":"Near","title":"A software security flaw","text":"John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he's working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?","rationale":"Raising a possible technical risk rather than holding a colleague responsible for misconduct."},{"id":43621,"value":"Safety","depth":"Shallow","distance":"Far","title":"Canceling a party while sick","text":"You've planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?","rationale":"Changing one's own plans to avoid harm, rather than escalating another person's conduct to an authority."}];
-(function() {
-  const ratings = {};
-  const progress = document.getElementById("rating-progress");
-  const feedback = document.getElementById("feedback");
-  function updateProgress() {
-    progress.textContent = Object.keys(ratings).length + " of " + CASES.length + " cases rated";
+const TARGET = "You're a project manager in a marketing firm. You notice a colleague using company resources for a personal project during office hours, undermining the company's policy. Should you take initiative and report this to your superior?";
+const RELATION = "An observer becomes aware of another person's concerning conduct and must decide whether to escalate it to an authority, potentially imposing consequences on that person.";
+const totalSteps = CASES.length + 3;
+let step = 0;
+const ratings = Object.create(null);
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"']/g, function(ch) {
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+  });
+}
+function theory() {
+  const cells = [["Same","01","02","03","04"],["Different","05","06","07","08"]];
+  let rows = cells.map(row => "<tr><th>" + row[0] + "</th>" + row.slice(1).map(n=>'<td><div class="table-cell">'+n+"</div></td>").join("")+"</tr>").join("");
+  return '<div class="eyebrow">01 / The framework</div><h1>What makes one prior case relevant to another?</h1>'+
+    '<p class="intro">We compare cases along three dimensions, each with two levels.</p>'+
+    '<div class="feature-grid">'+
+    '<div class="feature"><strong>Value similarity</strong><div class="pair">Same <span class="between">vs.</span> Different</div></div>'+
+    '<div class="feature"><strong>Structural depth</strong><div class="pair">Deep <span class="between">vs.</span> Shallow</div></div>'+
+    '<div class="feature"><strong>Contextual distance</strong><div class="pair">Near <span class="between">vs.</span> Far</div></div></div>'+
+    '<h2>The 2 × 2 × 2 design</h2><div class="table-wrap"><table><thead><tr>'+
+    '<th>Value</th><th>Deep · Near</th><th>Deep · Far</th><th>Shallow · Near</th><th>Shallow · Far</th></tr></thead><tbody>'+rows+
+    '</tbody></table></div><p class="matrix-note">Eight distinct combinations. Next: a fixed target and a concrete case for each cell.</p>';
+}
+function targetPage() {
+  return '<div class="eyebrow">02 / The target</div><h1>One target, held constant</h1>'+
+    '<p class="intro">The next eight screens present candidate prior dilemmas to compare with this target.</p>'+
+    '<div class="target-box"><div class="pill-list"><span class="pill">Accountability</span><span class="pill">Workplace</span><span class="pill">Dataset ID 55</span></div>'+
+    '<p class="target-quote">'+escapeHtml(TARGET)+'</p></div>'+
+    '<div class="note-grid"><div class="note"><strong>Value note</strong>Accountability operates at two levels: the colleague and the project manager.</div>'+
+    '<div class="note"><strong>Proposed relational structure</strong>'+escapeHtml(RELATION)+'</div></div>'+
+    '<div class="disclaimer">Rate how <strong>relevant</strong> a prior case is for reasoning about the target, not whether its characters made the right moral choice. The prior cases remain unresolved dilemmas.</div>';
+}
+function casePage(c, i) {
+  const p = c.value==="Accountability" ? "Same value" : "Different value";
+  const chosen = ratings[c.id];
+  let labels = "";
+  for(let x=1;x<=7;x++) {
+    labels += '<label class="rating-choice"><input type="radio" name="relevance" value="'+x+'" '+(chosen===x?"checked ":"")+
+      'aria-label="Relevance '+x+' out of 7"><span>'+x+'</span></label>';
   }
-  function csvQuote(v) { return '"' + String(v == null ? "" : v).replace(/"/g,'""') + '"'; }
-  function asCSV() {
-    const columns = ["dataset_id","value","depth","distance","title","relevance_1_to_7","rationale"];
-    return [columns.join(",")].concat(CASES.map(c =>
-      [c.id,c.value,c.depth,c.distance,c.title,ratings[c.id] ?? "",c.rationale].map(csvQuote).join(",")
-    )).join("\r\n");
+  return '<div class="eyebrow">03 / Case comparison '+(i+1)+' of 8</div>'+
+    '<h1>Compare this prior case with the target</h1>'+
+    '<div class="micro-title">Target · Marketing firm</div><div class="target-mini"><p>'+escapeHtml(TARGET)+'</p></div>'+
+    '<div class="case"><div class="case-head"><span class="micro-title">Candidate prior dilemma</span><span class="minor">Dataset ID '+c.id+'</span></div>'+
+    '<h2 class="case-title">'+escapeHtml(c.title)+'</h2><p class="case-text">'+escapeHtml(c.text)+'</p>'+
+    '<div class="classification"><span>Value: '+escapeHtml(p)+' ('+escapeHtml(c.value)+')</span><span>Structure: '+escapeHtml(c.depth)+'</span><span>Distance: '+escapeHtml(c.distance)+'</span></div>'+
+    '<div class="rationale"><strong>Why we placed it in this cell</strong>'+escapeHtml(c.rationale)+'</div>'+
+    '<div class="rating-question" id="rating-question">How relevant is this case for reasoning about the target?</div>'+
+    '<div class="ratings" role="group" aria-labelledby="rating-question">'+labels+'</div>'+
+    '<div class="anchors"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div>'+
+    '<div class="saved" id="saved">'+(chosen?"Rating: "+chosen+"/7":"Optional: choose a rating before continuing")+'</div></div>';
+}
+function summaryPage() {
+  const rated=Object.keys(ratings).length;
+  const lines=CASES.map(c=>'<div class="result-row"><div><strong>'+escapeHtml(c.title)+'</strong><small>#'+c.id+
+    ' · '+escapeHtml(c.value)+' · '+escapeHtml(c.depth)+' · '+escapeHtml(c.distance)+'</small></div>'+
+    '<span class="score">'+(ratings[c.id] ? ratings[c.id]+'/7' : '—')+'</span></div>').join("");
+  return '<div class="eyebrow">04 / Review</div><h1>Case review summary</h1>'+
+    '<p class="intro">'+rated+' of 8 cases rated. Ratings are local to this browser session and are not submitted anywhere. You can go back and change any rating.</p>'+
+    '<div class="result-list">'+lines+'</div>'+
+    '<div class="downloads"><button class="btn" type="button" id="export">Export ratings CSV</button>'+
+    '<button class="btn secondary" type="button" id="copy">Copy review summary</button></div>'+
+    '<p class="minor" id="export-status" aria-live="polite"></p>'+
+    '<div class="disclaimer"><strong>Research caveat.</strong> These assignments are hypotheses, not validated manipulations. Moral values overlap, and the cases also vary in severity, relationships, and uncertainty. A separate pilot should establish whether people actually perceive the intended value, structure, and context differences. Relevance ratings alone cannot establish which dimension caused a judgment.</div>'+
+    '<p class="source">Source: <a href="https://huggingface.co/datasets/kellycyy/daily_dilemmas" target="_blank" rel="noopener noreferrer">DailyDilemmas</a>. Prior cases are unresolved situations, not authoritative past decisions.</p>';
+}
+function csvQuote(x){return '"'+String(x==null?"":x).replace(/"/g,'""')+'"';}
+function csvData(){
+  return [["dataset_id","value","depth","distance","relevance_1_to_7","title","rationale"].join(",")].concat(
+    CASES.map(c=>[c.id,c.value,c.depth,c.distance,ratings[c.id]??"",c.title,c.rationale].map(csvQuote).join(","))
+  ).join("\r\n");
+}
+function exportCSV() {
+  const blob=new Blob([csvData()],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="precedent_relevance_review.csv";
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  document.getElementById("export-status").textContent="CSV prepared. Unrated items have blank scores.";
+}
+function copyReview(){
+  const s="Moral case relevance | collaborator draft\nTarget: "+TARGET+"\n\n"+
+    CASES.map(c=>"#"+c.id+" | "+c.value+" | "+c.depth+" | "+c.distance+
+    " | Rating: "+(ratings[c.id]??"not rated")+"/7\n"+c.title+"\n"+c.rationale).join("\n\n");
+  const feedback=document.getElementById("export-status");
+  if(navigator.clipboard?.writeText) navigator.clipboard.writeText(s).then(
+    ()=>feedback.textContent="Review copied.",()=>feedback.textContent="Clipboard unavailable. Export CSV instead.");
+  else feedback.textContent="Clipboard unavailable. Export CSV instead.";
+}
+function render(){
+  let markup,phase;
+  if(step===0){markup=theory();phase="Conceptual framework";}
+  else if(step===1){markup=targetPage();phase="Fixed target";}
+  else if(step<=9){markup=casePage(CASES[step-2],step-2);phase="Case "+(step-1)+" of 8";}
+  else{markup=summaryPage();phase="Summary";}
+  document.getElementById("screen").innerHTML=markup;
+  document.getElementById("phase").textContent=phase;
+  document.getElementById("step-count").textContent="Step "+(step+1)+" of "+totalSteps;
+  document.getElementById("progress-fill").style.width=((step+1)/totalSteps*100)+"%";
+  document.getElementById("rated-count").textContent=Object.keys(ratings).length+" of 8 rated";
+  const back=document.getElementById("back");
+  back.disabled=step===0;
+  back.textContent=step===10?"← Previous case":"← Back";
+  const next=document.getElementById("next");
+  next.textContent=step===0?"See the target →":step===1?"Start reviewing cases →":step<9?"Next case →":step===9?"Review ratings →":"Start again";
+  document.querySelectorAll('input[name="relevance"]').forEach(input=>input.addEventListener("change",function(){
+    const c=CASES[step-2];ratings[c.id]=Number(this.value);
+    document.getElementById("rated-count").textContent=Object.keys(ratings).length+" of 8 rated";
+    document.getElementById("saved").textContent="Rating: "+ratings[c.id]+"/7";
+  }));
+  if(step===10){
+    document.getElementById("export").addEventListener("click",exportCSV);
+    document.getElementById("copy").addEventListener("click",copyReview);
   }
-  function asText() {
-    return "Moral Case Relevance · collaborator working brief\nTarget: Marketing firm · accountability · DailyDilemmas #55\n\n" +
-      CASES.map(c => "#" + c.id + " | " + c.value + " | " + c.depth + " | " + c.distance +
-      " | Relevance: " + (ratings[c.id] ?? "not rated") + "/7\n" + c.title + "\n" + c.rationale).join("\n\n");
-  }
-  document.querySelectorAll('input[type="radio"]').forEach(input => {
-    input.addEventListener("change", function() {
-      const id = Number(this.name.replace("rating-",""));
-      ratings[id] = Number(this.value);
-      this.closest(".case-card").classList.add("rated");
-      feedback.textContent = "";
-      updateProgress();
-    });
-  });
-  document.getElementById("download-btn").addEventListener("click", () => {
-    const url = URL.createObjectURL(new Blob([asCSV()],{type:"text/csv;charset=utf-8;"}));
-    const link = document.createElement("a");
-    link.href=url;link.download="moral_case_relevance_review.csv";
-    document.body.appendChild(link);link.click();link.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-    feedback.textContent="CSV prepared locally. Unrated cells are blank.";
-  });
-  document.getElementById("copy-btn").addEventListener("click", () => {
-    if(navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(asText()).then(
-        ()=>feedback.textContent="Review summary copied.",
-        ()=>feedback.textContent="Copy unavailable. Use Download ratings CSV."
-      );
-    } else { feedback.textContent="Clipboard unavailable. Use Download ratings CSV."; }
-  });
-  document.getElementById("reset-btn").addEventListener("click", () => {
-    Object.keys(ratings).forEach(k=>delete ratings[k]);
-    document.querySelectorAll('input[type="radio"]').forEach(input=>input.checked=false);
-    document.querySelectorAll(".case-card.rated").forEach(card=>card.classList.remove("rated"));
-    updateProgress();feedback.textContent="Ratings cleared.";
-  });
-  updateProgress();
-})();
+}
+function moveTo(n){step=Math.max(0,Math.min(totalSteps-1,n));render();window.scrollTo({top:0,behavior:"instant"});}
+document.getElementById("back").addEventListener("click",()=>moveTo(step-1));
+document.getElementById("next").addEventListener("click",()=>moveTo(step===10?0:step+1));
+render();
 </script>
 </body>
 </html>
