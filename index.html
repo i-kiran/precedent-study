@@ -94,6 +94,16 @@ tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
 a{color:var(--uw-purple)}
 @media(max-width:650px){.shell{padding:0 15px 40px}.topline-inner{padding:15px}.feature-grid,.note-grid{grid-template-columns:1fr}.case,.card,.target-box{padding:18px}.stepmeta{margin-top:23px}.ratings{gap:4px}.rating-choice span{padding:12px 0}.scope{font-size:.72rem}.controls{gap:7px}.btn{padding:11px 13px}.table-wrap{font-size:.75rem}th,td{padding:9px 8px}.table-cell{font-size:.73rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.progressbar div{transition:none}}
+.explanation-area{margin:17px 0 12px;display:grid;gap:10px}
+.explanation-label{font-size:.93rem;font-weight:750}
+.muted-label{font-size:.82rem;color:var(--muted);font-weight:450}
+.explanation-area textarea{width:100%;resize:vertical;min-height:104px;padding:13px 14px;border:1.5px solid var(--line);border-radius:8px;color:var(--ink);font:inherit;line-height:1.5;background:var(--white)}
+.explanation-area textarea:focus{outline:2px solid var(--uw-purple);outline-offset:2px}
+.research-notes{margin-top:18px;border-top:1px solid var(--line);padding-top:15px;color:#55525c}
+.research-notes summary{cursor:pointer;font-size:.84rem;font-weight:720;color:var(--uw-purple)}
+.research-notes p{font-size:.88rem;line-height:1.6;margin-bottom:0}
+.explanation-review{font-size:.84rem;margin:9px 0 0;white-space:pre-wrap;line-height:1.5}
+.save-notice{margin:18px 0;background:var(--purple-light);border-left:3px solid var(--uw-purple);padding:15px;border-radius:6px;font-size:.88rem;line-height:1.6}
 </style>
 </head>
 <body>
@@ -124,12 +134,32 @@ a{color:var(--uw-purple)}
 </main>
 <script>
 "use strict";
-const CASES = [{"id":4663,"value":"Accountability","depth":"Deep","distance":"Near","title":"Harassment policy and a close colleague","text":"You work in a company where there's a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague's behavior and potentially jeopardize their financial situation?","rationale":"Witnessing another employee's misconduct and deciding whether to escalate it."},{"id":3056,"value":"Accountability","depth":"Deep","distance":"Far","title":"Bullying by a fellow teacher","text":"You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend's behavior to the principal or stay silent to preserve your friendship?","rationale":"Similar observer–misconduct–authority structure, but in a school rather than a marketing firm."},{"id":16230,"value":"Accountability","depth":"Shallow","distance":"Near","title":"A manager's own reporting mistake","text":"You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?","rationale":"Workplace accountability, but acknowledging one's own mistake rather than reporting another person's misconduct."},{"id":7407,"value":"Accountability","depth":"Shallow","distance":"Far","title":"A damaged borrowed book","text":"You've borrowed a rare book from a friend who's an avid collector. In the meantime, your sibling, unaware of the book's origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?","rationale":"Responsibility for entrusted property in a personal relationship, with different actors and decision structure."},{"id":13115,"value":"Safety","depth":"Deep","distance":"Near","title":"Food-safety practices in a restaurant","text":"You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?","rationale":"Observing a colleague's concerning conduct and deciding whether to escalate it, with customer safety foregrounded."},{"id":7723,"value":"Safety","depth":"Deep","distance":"Far","title":"A friend's school-bus driving","text":"Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?","rationale":"Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs."},{"id":17048,"value":"Safety","depth":"Shallow","distance":"Near","title":"A software security flaw","text":"John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he's working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?","rationale":"Raising a possible technical risk rather than holding a colleague responsible for misconduct."},{"id":43621,"value":"Safety","depth":"Shallow","distance":"Far","title":"Canceling a party while sick","text":"You've planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?","rationale":"Changing one's own plans to avoid harm, rather than escalating another person's conduct to an authority."}];
+const CASES = [{"id":4663,"value":"Accountability","depth":"Deep","distance":"Near","text":"You work in a company where there's a zero-tolerance policy for any kind of harassment. Your closest colleague, who is also a single parent struggling with finances, is involved in bullying a new employee. Do you report your colleague's behavior and potentially jeopardize their financial situation?","rationale":"Witnessing another employee's misconduct and deciding whether to escalate it."},{"id":3056,"value":"Accountability","depth":"Deep","distance":"Far","text":"You are a teacher who has observed a fellow teacher bullying students in class. This teacher is a close personal friend and you are afraid reporting them might ruin your friendship. Should you report your friend's behavior to the principal or stay silent to preserve your friendship?","rationale":"Similar observer–misconduct–authority structure, but in a school rather than a marketing firm."},{"id":16230,"value":"Accountability","depth":"Shallow","distance":"Near","text":"You are a manager at a large corporation. You realize a mistake you made in a report could potentially cost the company millions. Do you accept responsibility and possibly lose your job, or stay quiet hoping no one will notice?","rationale":"Workplace accountability, but acknowledging one's own mistake rather than reporting another person's misconduct."},{"id":7407,"value":"Accountability","depth":"Shallow","distance":"Far","text":"You've borrowed a rare book from a friend who's an avid collector. In the meantime, your sibling, unaware of the book's origin, accidentally damaged it severely. Should you return the book as it is and tell your friend the truth, or should you try to find a replacement without letting your friend know?","rationale":"Responsibility for entrusted property in a personal relationship, with different actors and decision structure."},{"id":13115,"value":"Safety","depth":"Deep","distance":"Near","text":"You are a chef in a popular restaurant that emphasizes the importance of safe food preparation practices. One day, you notice your sous-chef is not washing their hands properly before preparing food, which could lead to foodborne illnesses among the customers. Do you report your colleague to your superiors, potentially jeopardizing their job, or do you confront them privately about their unsafe practices?","rationale":"Observing a colleague's concerning conduct and deciding whether to escalate it, with customer safety foregrounded."},{"id":7723,"value":"Safety","depth":"Deep","distance":"Far","text":"Your friend tells you about their struggle with substance abuse. They are a school bus driver, and you fear for the safety of the children. Should you report your friend to their employer?","rationale":"Learning concerning information about someone known to you and deciding whether to notify an authority despite relational costs."},{"id":17048,"value":"Safety","depth":"Shallow","distance":"Near","text":"John has always been insecure about his abilities despite his talent as a software engineer. He discovered a serious security flaw in the software he's working on, but fears he might be wrong and lose his job if he brings it up. Should he risk his job security by reporting the potential security flaw or remain silent and potentially compromise the safety of the software users?","rationale":"Raising a possible technical risk rather than holding a colleague responsible for misconduct."},{"id":43621,"value":"Safety","depth":"Shallow","distance":"Far","text":"You've planned a party but fall ill the day before it is scheduled. You have friends traveling from out of town specifically for this event, but attending the party while sick could potentially spread illness to others. Should you cancel the party and disappoint your friends or risk potentially making others sick by going ahead with it?","rationale":"Changing one's own plans to avoid harm, rather than escalating another person's conduct to an authority."}];
 const TARGET = "You're a project manager in a marketing firm. You notice a colleague using company resources for a personal project during office hours, undermining the company's policy. Should you take initiative and report this to your superior?";
 const RELATION = "An observer becomes aware of another person's concerning conduct and must decide whether to escalate it to an authority, potentially imposing consequences on that person.";
 const totalSteps = CASES.length + 3;
 let step = 0;
-const ratings = Object.create(null);
+const STORAGE_KEY = "precedent-review-v3";
+const RESULTS_ENDPOINT = ""; // Set to your secure server endpoint once deployed; never put a GitHub token here.
+function freshId(){
+  if (crypto?.randomUUID) return crypto.randomUUID();
+  const a=new Uint8Array(16);crypto.getRandomValues(a);
+  a[6]=(a[6]&15)|64;a[8]=(a[8]&63)|128;
+  return [...a].map((n,i)=>n.toString(16).padStart(2,"0")+([3,5,7,9].includes(i)?"-":"")).join("");
+}
+let restored={};
+try{restored=JSON.parse(sessionStorage.getItem(STORAGE_KEY)||"{}");}catch(e){}
+let reviewId=typeof restored.reviewId==="string"&&/^[0-9a-f-]{36}$/.test(restored.reviewId)?restored.reviewId:freshId();
+let completedAt=typeof restored.completedAt==="string"?restored.completedAt:null;
+const ratings=Object.assign(Object.create(null),restored.ratings||{});
+const explanations=Object.assign(Object.create(null),restored.explanations||{});
+let lastSubmittedJSON=null;
+let submissionInFlight=false;
+function persist(){
+  try{sessionStorage.setItem(STORAGE_KEY,JSON.stringify({reviewId,ratings,explanations,completedAt}));}catch(e){}
+}
+persist();
+
 function escapeHtml(text) {
   return String(text).replace(/[&<>"']/g, function(ch) {
     return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
@@ -157,63 +187,104 @@ function targetPage() {
     '<div class="note"><strong>Proposed relational structure</strong>'+escapeHtml(RELATION)+'</div></div>'+
     '<div class="disclaimer">Rate how <strong>relevant</strong> a prior case is for reasoning about the target, not whether its characters made the right moral choice. The prior cases remain unresolved dilemmas.</div>';
 }
-function casePage(c, i) {
-  const p = c.value==="Accountability" ? "Same value" : "Different value";
-  const chosen = ratings[c.id];
-  let labels = "";
-  for(let x=1;x<=7;x++) {
-    labels += '<label class="rating-choice"><input type="radio" name="relevance" value="'+x+'" '+(chosen===x?"checked ":"")+
-      'aria-label="Relevance '+x+' out of 7"><span>'+x+'</span></label>';
+function casePage(c,i){
+  const selected=ratings[c.id];
+  let labels="";
+  for(let k=1;k<=7;k++){
+    labels+='<label class="rating-choice"><input type="radio" name="relevance" value="'+k+'" '+(selected===k?"checked ":"")+
+      'aria-label="Relevance '+k+' out of 7"><span>'+k+'</span></label>';
   }
-  return '<div class="eyebrow">03 / Case comparison '+(i+1)+' of 8</div>'+
-    '<h1>Compare this prior case with the target</h1>'+
+  return '<div class="eyebrow">03 / Comparison '+(i+1)+' of 8</div>'+
+    '<h1>How relevant is this prior case?</h1>'+
     '<div class="micro-title">Target · Marketing firm</div><div class="target-mini"><p>'+escapeHtml(TARGET)+'</p></div>'+
-    '<div class="case"><div class="case-head"><span class="micro-title">Candidate prior dilemma</span><span class="minor">Dataset ID '+c.id+'</span></div>'+
-    '<h2 class="case-title">'+escapeHtml(c.title)+'</h2><p class="case-text">'+escapeHtml(c.text)+'</p>'+
-    '<div class="classification"><span>Value: '+escapeHtml(p)+' ('+escapeHtml(c.value)+')</span><span>Structure: '+escapeHtml(c.depth)+'</span><span>Distance: '+escapeHtml(c.distance)+'</span></div>'+
-    '<div class="rationale"><strong>Why we placed it in this cell</strong>'+escapeHtml(c.rationale)+'</div>'+
+    '<div class="case"><div class="case-head"><span class="micro-title">Prior dilemma '+(i+1)+'</span><span class="minor">DailyDilemmas #'+c.id+'</span></div>'+
+    '<p class="case-text">'+escapeHtml(c.text)+'</p>'+
     '<div class="rating-question" id="rating-question">How relevant is this case for reasoning about the target?</div>'+
     '<div class="ratings" role="group" aria-labelledby="rating-question">'+labels+'</div>'+
     '<div class="anchors"><span>1 · Not relevant</span><span>7 · Extremely relevant</span></div>'+
-    '<div class="saved" id="saved">'+(chosen?"Rating: "+chosen+"/7":"Optional: choose a rating before continuing")+'</div></div>';
+    '<div class="saved" id="saved">'+(selected?"Rating: "+selected+"/7":"Select a rating to continue")+'</div>'+
+    '<div class="explanation-area"><label class="explanation-label" for="explanation">Why did you give this rating? <span class="muted-label">(optional)</span></label>'+
+    '<textarea id="explanation" maxlength="2000" rows="4" placeholder="Briefly explain what makes the prior case relevant or different from the target.">'+escapeHtml(explanations[c.id]||"")+'</textarea></div>'+
+    '<details class="research-notes"><summary>Researcher notes: proposed condition and rationale</summary>'+
+    '<div class="classification"><span>Value: '+escapeHtml(c.value)+'</span><span>Structure: '+escapeHtml(c.depth)+'</span><span>Distance: '+escapeHtml(c.distance)+'</span></div>'+
+    '<p>'+escapeHtml(c.rationale)+'</p></details></div>';
 }
-function summaryPage() {
+function summaryPage(){
   const rated=Object.keys(ratings).length;
-  const lines=CASES.map(c=>'<div class="result-row"><div><strong>'+escapeHtml(c.title)+'</strong><small>#'+c.id+
-    ' · '+escapeHtml(c.value)+' · '+escapeHtml(c.depth)+' · '+escapeHtml(c.distance)+'</small></div>'+
-    '<span class="score">'+(ratings[c.id] ? ratings[c.id]+'/7' : '—')+'</span></div>').join("");
-  return '<div class="eyebrow">04 / Review</div><h1>Case review summary</h1>'+
-    '<p class="intro">'+rated+' of 8 cases rated. Ratings are local to this browser session and are not submitted anywhere. You can go back and change any rating.</p>'+
+  const lines=CASES.map((c,i)=>'<div class="result-row"><div><strong>Prior dilemma '+(i+1)+' · #'+c.id+'</strong>'+
+    '<small>'+escapeHtml(c.value)+' · '+escapeHtml(c.depth)+' · '+escapeHtml(c.distance)+'</small>'+
+    (explanations[c.id]?'<p class="explanation-review">'+escapeHtml(explanations[c.id])+'</p>':"")+'</div>'+
+    '<span class="score">'+(ratings[c.id]?ratings[c.id]+'/7':'—')+'</span></div>').join("");
+  const saveNotice=!RESULTS_ENDPOINT
+    ? '<strong>Automatic GitHub saving is not connected yet.</strong> Your ratings are stored in this browser tab. Export the CSV to preserve them; connecting a secure results endpoint will enable automatic saving.'
+    : rated===8?'Preparing your secure GitHub submission…':'Complete all eight ratings to enable GitHub saving.';
+  return '<div class="eyebrow">04 / Review</div><h1>Your review summary</h1>'+
+    '<p class="intro">'+rated+' of 8 cases rated. Review ID: <code>'+escapeHtml(reviewId)+'</code>. Explanations are optional. You can go back to edit your ratings.</p>'+
     '<div class="result-list">'+lines+'</div>'+
-    '<div class="downloads"><button class="btn" type="button" id="export">Export ratings CSV</button>'+
-    '<button class="btn secondary" type="button" id="copy">Copy review summary</button></div>'+
+    '<div class="save-notice" id="save-notice" role="status" aria-live="polite">'+saveNotice+'</div>'+
+    '<div class="downloads"><button class="btn" type="button" id="export">Download responses CSV</button>'+
+    '<button class="btn secondary" type="button" id="copy">Copy review summary</button>'+
+    (RESULTS_ENDPOINT?'<button class="btn secondary" type="button" id="retry">Retry GitHub save</button>':'')+'</div>'+
     '<p class="minor" id="export-status" aria-live="polite"></p>'+
-    '<div class="disclaimer"><strong>Research caveat.</strong> These assignments are hypotheses, not validated manipulations. Moral values overlap, and the cases also vary in severity, relationships, and uncertainty. A separate pilot should establish whether people actually perceive the intended value, structure, and context differences. Relevance ratings alone cannot establish which dimension caused a judgment.</div>'+
-    '<p class="source">Source: <a href="https://huggingface.co/datasets/kellycyy/daily_dilemmas" target="_blank" rel="noopener noreferrer">DailyDilemmas</a>. Prior cases are unresolved situations, not authoritative past decisions.</p>';
+    '<div class="disclaimer"><strong>Research caveat.</strong> These assignments are hypotheses, not validated manipulations. Moral values overlap, and the cases also vary in severity, relationships, and uncertainty. A separate pilot should establish whether people actually perceive the intended value, structure, and context differences.</div>'+
+    '<p class="source">Source: <a href="https://huggingface.co/datasets/kellycyy/daily_dilemmas" target="_blank" rel="noopener noreferrer">DailyDilemmas</a>. Do not include names or identifying details in explanations. If secure GitHub saving is enabled, responses will be stored in the designated repository.</p>';
 }
 function csvQuote(x){return '"'+String(x==null?"":x).replace(/"/g,'""')+'"';}
-function csvData(){
-  return [["dataset_id","value","depth","distance","relevance_1_to_7","title","rationale"].join(",")].concat(
-    CASES.map(c=>[c.id,c.value,c.depth,c.distance,ratings[c.id]??"",c.title,c.rationale].map(csvQuote).join(","))
-  ).join("\r\n");
+function responseRows(){
+  return CASES.map(c=>({
+    review_id:reviewId,
+    completed_at:completedAt||new Date().toISOString(),
+    target_id:55,
+    case_id:c.id,
+    value:c.value,
+    depth:c.depth,
+    distance:c.distance,
+    relevance:ratings[c.id]??null,
+    explanation:explanations[c.id]||""
+  }));
 }
-function exportCSV() {
+function csvData(){
+  const names=["review_id","completed_at","target_id","case_id","value","depth","distance","relevance_1_to_7","explanation"];
+  return [names.join(",")].concat(responseRows().map(r=>
+    [r.review_id,r.completed_at,r.target_id,r.case_id,r.value,r.depth,r.distance,r.relevance??"",r.explanation].map(csvQuote).join(",")
+  )).join("\r\n");
+}
+function exportCSV(){
   const blob=new Blob([csvData()],{type:"text/csv;charset=utf-8"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
-  a.href=url;a.download="precedent_relevance_review.csv";
+  a.href=url;a.download="precedent_review_"+reviewId+".csv";
   document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
-  document.getElementById("export-status").textContent="CSV prepared. Unrated items have blank scores.";
+  document.getElementById("export-status").textContent="CSV downloaded to this device.";
 }
 function copyReview(){
-  const s="Moral case relevance | collaborator draft\nTarget: "+TARGET+"\n\n"+
-    CASES.map(c=>"#"+c.id+" | "+c.value+" | "+c.depth+" | "+c.distance+
-    " | Rating: "+(ratings[c.id]??"not rated")+"/7\n"+c.title+"\n"+c.rationale).join("\n\n");
+  const s="Moral case relevance | collaborator review\nReview ID: "+reviewId+"\nTarget: "+TARGET+"\n\n"+
+    CASES.map((c,i)=>"Prior dilemma "+(i+1)+" (#"+c.id+") | "+c.value+" | "+c.depth+" | "+c.distance+
+    " | Relevance: "+(ratings[c.id]??"not rated")+"/7\nExplanation: "+(explanations[c.id]||"(none)")).join("\n\n");
   const feedback=document.getElementById("export-status");
-  if(navigator.clipboard?.writeText) navigator.clipboard.writeText(s).then(
-    ()=>feedback.textContent="Review copied.",()=>feedback.textContent="Clipboard unavailable. Export CSV instead.");
-  else feedback.textContent="Clipboard unavailable. Export CSV instead.";
+  if(navigator.clipboard?.writeText)navigator.clipboard.writeText(s).then(
+    ()=>feedback.textContent="Review copied.",()=>feedback.textContent="Clipboard unavailable. Download CSV instead.");
+  else feedback.textContent="Clipboard unavailable. Download CSV instead.";
+}
+async function autoSaveToGitHub(){
+  if(!RESULTS_ENDPOINT||Object.keys(ratings).length!==8||submissionInFlight||step!==10)return;
+  const data={review_id:reviewId,completed_at:completedAt||new Date().toISOString(),responses:responseRows()};
+  const payload=JSON.stringify(data);
+  if(payload===lastSubmittedJSON)return;
+  const notice=document.getElementById("save-notice");
+  submissionInFlight=true;
+  if(notice)notice.textContent="Saving completed responses securely…";
+  try{
+    const result=await fetch(RESULTS_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:payload,mode:"cors"});
+    if(!result.ok)throw new Error("HTTP "+result.status);
+    const ack=await result.json();
+    if(!ack.saved)throw new Error("Receiver did not confirm saving");
+    lastSubmittedJSON=payload;
+    if(notice)notice.textContent="Saved to GitHub successfully. Review ID: "+reviewId;
+  }catch(e){
+    if(notice)notice.textContent="GitHub saving failed ("+e.message+"). Download your CSV as a backup or retry.";
+  }finally{submissionInFlight=false;}
 }
 function render(){
   let markup,phase;
@@ -230,18 +301,45 @@ function render(){
   back.disabled=step===0;
   back.textContent=step===10?"← Previous case":"← Back";
   const next=document.getElementById("next");
+  const caseIndex=step-2;
+  next.disabled=step>=2&&step<=9&&!ratings[CASES[caseIndex].id];
   next.textContent=step===0?"See the target →":step===1?"Start reviewing cases →":step<9?"Next case →":step===9?"Review ratings →":"Start again";
   document.querySelectorAll('input[name="relevance"]').forEach(input=>input.addEventListener("change",function(){
     const c=CASES[step-2];ratings[c.id]=Number(this.value);
     document.getElementById("rated-count").textContent=Object.keys(ratings).length+" of 8 rated";
     document.getElementById("saved").textContent="Rating: "+ratings[c.id]+"/7";
+    next.disabled=false;
+    lastSubmittedJSON=null;
+    persist();
   }));
+  const textbox=document.getElementById("explanation");
+  if(textbox)textbox.addEventListener("input",function(){
+    const c=CASES[step-2];
+    explanations[c.id]=this.value.slice(0,2000);
+    lastSubmittedJSON=null;
+    persist();
+  });
   if(step===10){
     document.getElementById("export").addEventListener("click",exportCSV);
     document.getElementById("copy").addEventListener("click",copyReview);
+    const retry=document.getElementById("retry");
+    if(retry)retry.addEventListener("click",()=>{lastSubmittedJSON=null;autoSaveToGitHub();});
+    autoSaveToGitHub();
   }
 }
-function moveTo(n){step=Math.max(0,Math.min(totalSteps-1,n));render();window.scrollTo({top:0,behavior:"instant"});}
+function moveTo(n){
+  const restarting=step===10&&n===0;
+  if(restarting){
+    for(const k of Object.keys(ratings))delete ratings[k];
+    for(const k of Object.keys(explanations))delete explanations[k];
+    reviewId=freshId();completedAt=null;lastSubmittedJSON=null;
+    persist();
+  }
+  const arrivingAtSummary=step!==10&&n===10;
+  if(arrivingAtSummary&&Object.keys(ratings).length===8&&!completedAt){completedAt=new Date().toISOString();persist();}
+  step=Math.max(0,Math.min(totalSteps-1,n));
+  render();window.scrollTo({top:0,behavior:"instant"});
+}
 document.getElementById("back").addEventListener("click",()=>moveTo(step-1));
 document.getElementById("next").addEventListener("click",()=>moveTo(step===10?0:step+1));
 render();
