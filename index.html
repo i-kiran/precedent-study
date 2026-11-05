@@ -341,9 +341,9 @@ const CASES = [{"id":4663,"value":"Accountability","depth":"Deep","distance":"Ne
 const TARGET = "You're a project manager in a marketing firm. You notice a colleague using company resources for a personal project during office hours, undermining the company's policy. Should you take initiative and report this to your superior?";
 const RESULTS_ENDPOINT = ""; // HTTPS endpoint for server-side response collection; MUST configure before Prolific launch.
 const PROLIFIC_COMPLETION_URL = ""; // Use the exact Prolific completion URL supplied by Prolific. Never invent a completion code.
-const STORAGE_KEY = "precedent-prolific-v1";
 const N = CASES.length, TOTAL_STEPS = N + 3;
 const qs = new URLSearchParams(window.location.search);
+const STORAGE_KEY = "precedent-prolific-v1:" + (qs.get("SESSION_ID")||qs.get("PROLIFIC_PID")||"preview");
 const prolific = {
   pid: (qs.get("PROLIFIC_PID")||"").slice(0,128),
   study_id: (qs.get("STUDY_ID")||"").slice(0,128),
@@ -364,7 +364,7 @@ function randomOrder() {
   return arr;
 }
 let prior={};
-try { prior=JSON.parse(sessionStorage.getItem(STORAGE_KEY)||"{}"); } catch(e) {}
+try { prior=JSON.parse(sessionStorage.getItem(STORAGE_KEY)||"{}")||{}; } catch(e) {}
 const validOrder = Array.isArray(prior.order)&&prior.order.length===N&&
   new Set(prior.order).size===N&&prior.order.every(v=>CASES.some(c=>c.id===v));
 const study = {
@@ -395,7 +395,7 @@ function introScreen(){
     '<p>Please respond based on your own judgment. You can return to earlier screens and revise your responses.</p></div>'+
     '<p class="study-description">Taking part is voluntary. You may stop at any time. Please do not include names or personally identifying information in your written answers.</p>'+
     '<label class="consent-label"><input type="checkbox" id="consent" '+(study.consent?"checked ":"")+'><span>I understand the instructions above and agree to participate.</span></label>'+
-    (!RESULTS_ENDPOINT?'<div class="save-notice"><strong>Preview mode:</strong> Automated research data collection is not yet configured. This version must not be launched as a paid Prolific study.</div>':"");
+    (!RESULTS_ENDPOINT||!PROLIFIC_COMPLETION_URL?'<div class="save-notice"><strong>Preview mode:</strong> Data collection and Prolific completion are not fully configured. Please do not recruit participants using this link yet.</div>':"");
 }
 function targetScreen(){
   return '<div class="eyebrow">Target situation</div><h1>Please read this situation carefully</h1>'+
@@ -431,16 +431,16 @@ function finalScreen(){
   const finished=countRatings()===N;
   const notice=study.submitted?
     '<div class="save-notice"><strong>Responses saved.</strong> Your responses have been received. Thank you for taking part.</div>':
-    RESULTS_ENDPOINT?
+    RESULTS_ENDPOINT&&PROLIFIC_COMPLETION_URL?
       '<div class="save-notice">You have completed the ratings. Select <strong>Submit responses</strong> below to save your answers before returning to Prolific.</div>':
       '<div class="save-notice"><strong>Preview mode.</strong> This site cannot collect responses automatically yet. It must not be used to recruit Prolific participants until secure saving and completion are configured.</div>';
   return '<div class="eyebrow">Final step</div><h1>Thank you for your responses</h1>'+
     '<p class="study-description">You have completed '+countRatings()+' of '+N+' required relevance ratings.</p>'+
     (finished?notice:'<p class="study-error">Some required ratings are missing. Please go back and complete them.</p>')+
     '<div id="submit-status" role="status" aria-live="polite"></div>'+
-    (RESULTS_ENDPOINT&&finished&&!study.submitted?'<button type="button" class="btn" id="submit-responses">Submit responses</button>':'')+
+    (RESULTS_ENDPOINT&&PROLIFIC_COMPLETION_URL&&finished&&!study.submitted?'<button type="button" class="btn" id="submit-responses">Submit responses</button>':'')+
     (study.submitted&&PROLIFIC_COMPLETION_URL?'<button type="button" class="btn" id="return-to-prolific">Return to Prolific</button>':'')+
-    ((!RESULTS_ENDPOINT||!study.submitted)?'<button type="button" class="btn secondary" id="download-backup">Download responses CSV (backup)</button>':'')+
+    ((!RESULTS_ENDPOINT||!PROLIFIC_COMPLETION_URL||!study.submitted)?'<button type="button" class="btn secondary" id="download-backup">Download responses CSV (backup)</button>':'')+
     '<p class="study-footer">Response code: '+esc(study.review_id)+'.</p>';
 }
 function leaveCase(){
@@ -474,7 +474,7 @@ function download(){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 async function submit(){
-  if(busy||study.submitted||!RESULTS_ENDPOINT||countRatings()!==N)return;
+  if(busy||study.submitted||!RESULTS_ENDPOINT||!PROLIFIC_COMPLETION_URL||countRatings()!==N)return;
   busy=true;
   const btn=document.getElementById("submit-responses");
   if(btn){btn.disabled=true;btn.textContent="Saving responses…";}
